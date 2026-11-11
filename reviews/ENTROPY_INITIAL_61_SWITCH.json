@@ -1,0 +1,109 @@
+{
+  "updated_at": "2026-11-11T08:02:19.628374+00:00",
+  "authorization": "User requested 61 initial entropy fields only, no fine scan for all N; authorized editing now and rerunning N=12.",
+  "scan_policy": {
+    "name": "initial_61_only",
+    "fields": [
+      0.01,
+      0.06,
+      0.11,
+      0.16,
+      0.21,
+      0.26,
+      0.31,
+      0.36,
+      0.41,
+      0.46,
+      0.51,
+      0.56,
+      0.61,
+      0.66,
+      0.71,
+      0.76,
+      0.81,
+      0.86,
+      0.91,
+      0.96,
+      1.01,
+      1.06,
+      1.11,
+      1.16,
+      1.21,
+      1.26,
+      1.31,
+      1.36,
+      1.41,
+      1.46,
+      1.51,
+      1.56,
+      1.61,
+      1.66,
+      1.71,
+      1.76,
+      1.81,
+      1.86,
+      1.91,
+      1.96,
+      2.01,
+      2.06,
+      2.11,
+      2.16,
+      2.21,
+      2.26,
+      2.31,
+      2.36,
+      2.41,
+      2.46,
+      2.51,
+      2.56,
+      2.61,
+      2.66,
+      2.71,
+      2.76,
+      2.81,
+      2.86,
+      2.91,
+      2.96,
+      3.0
+    ],
+    "refinement": false,
+    "boundary_extension": false
+  },
+  "previous_session": "/home/administrator/projects/qumode_qsk_gpu/runs/dual_gpu/sessions/launch-da8a77301d1f4b7a978a0ac4f5ba8e77",
+  "previous_worker_exits": [
+    {
+      "device": 0,
+      "returncode": -15
+    },
+    {
+      "device": 1,
+      "returncode": -15
+    }
+  ],
+  "restart": {
+    "round": 1,
+    "min_n": 12,
+    "preserve_historical_smaller_n": true,
+    "fresh_attempts_required_for_old_physics_bindings": true
+  },
+  "validation_session": "runs/dual_gpu/sessions/validate-a79ed26fdbe24c229c2a2a5c2d436b75",
+  "state": "running",
+  "production_session": "runs/dual_gpu/sessions/launch-d04f7becdb3b4695b36989cf83497184",
+  "coordinator_pid": 22089,
+  "validation_verdicts": {
+    "gpu0": "PASS",
+    "gpu1": "PASS"
+  },
+  "verified_scans": [
+    {
+      "scan": "runs/dual_gpu/instances/N12_seed831112000/attempt-9dd85c57a0534c3ea9ffeae3d21a623e/ent/N12_seed831112000_scan.json",
+      "n_fields": 61,
+      "peak_b": 0.66
+    },
+    {
+      "scan": "runs/dual_gpu/instances/N12_seed831112001/attempt-f4106023ccc3424491dd58379ffbdb60/ent/N12_seed831112001_scan.json",
+      "n_fields": 61,
+      "peak_b": 0.66
+    }
+  ]
+}

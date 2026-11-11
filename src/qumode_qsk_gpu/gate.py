@@ -20,8 +20,12 @@ pass on the user's GPU. This package never auto-starts production work.
 """
 from __future__ import annotations
 
+import os
+
 import json
 import platform
+
+import numpy as np
 from pathlib import Path
 
 from .io_util import sha256_file, sha256_json, save_json, now_shanghai, read_json
@@ -247,8 +251,8 @@ def _compute_binding():
         kernel_path=kinfo.get("kernel_path"),
         raw_kernel_options=kinfo.get("raw_kernel_options"),
         raw_kernels_error=kinfo.get("raw_kernels_error"),
-        dtype_real=str(REAL),
-        dtype_cplx=str(CPLX),
+        dtype_real=np.dtype(REAL).name,
+        dtype_cplx=np.dtype(CPLX).name,
         backend=info.backend,
     )
     binding["binding_sha256"] = sha256_json({k: v for k, v in binding.items() if k != "binding_sha256"})
@@ -286,7 +290,7 @@ def verify_cached_binding():
 
 
 def stamp_path():
-    return STAMPS / STAMP_NAME
+    return Path(os.environ.get("QSK_VALIDATION_STAMPS", str(STAMPS))) / STAMP_NAME
 
 
 def write_pass_stamp(test_report):
@@ -306,6 +310,10 @@ def write_pass_stamp(test_report):
             "An unofficial (version-drift) stamp does not authorize official results."
         ),
     )
+    if stamp_path().exists():
+        import uuid
+        history = stamp_path().parent / "history" / (uuid.uuid4().hex + ".json")
+        save_json(history, read_json(stamp_path()))
     save_json(stamp_path(), doc)
     return doc
 
@@ -319,7 +327,7 @@ def load_stamp():
 
 _COMPARE_KEYS = (
     "source_pins_sha256", "fixture_manifest_sha256", "fixture_files_sha256",
-    "tolerances_sha256", "device_name", "dtype_real", "dtype_cplx", "backend",
+    "tolerances_sha256", "device_id", "device_name", "dtype_real", "dtype_cplx", "backend",
     "cupy_version", "cuda_version", "compute_capability",
     "numpy_version", "scipy_version", "numba_version", "python_version",
     "kernel_path", "raw_kernel_options",
@@ -331,7 +339,7 @@ def assert_production_allowed(allow_unofficial=None):
     if not runtime.is_acquired():
         raise RuntimeError("runtime.acquire() first")
     info = runtime.info()
-    if str(REAL) != "float64" or str(CPLX) != "complex128":
+    if np.dtype(REAL) != np.dtype("float64") or np.dtype(CPLX) != np.dtype("complex128"):
         raise RuntimeError("production requires float64/complex128")
     if info.dtype_real != "float64" or info.dtype_cplx != "complex128":
         raise RuntimeError("runtime dtypes are not float64/complex128")
@@ -390,8 +398,8 @@ def provenance_fields():
         cupy_version=versions.get("cupy") or b.get("cupy_version"),
         cuda_version=versions.get("cuda_runtime") or b.get("cuda_version"),
         device_name=versions.get("device_name") or b.get("device_name"),
-        dtype_real=str(REAL),
-        dtype_cplx=str(CPLX),
+        dtype_real=np.dtype(REAL).name,
+        dtype_cplx=np.dtype(CPLX).name,
         kernel_path=b.get("kernel_path"),
         raw_kernel_options=b.get("raw_kernel_options"),
         unofficial=bool(b.get("unofficial") or b.get("allow_version_drift")),

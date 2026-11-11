@@ -1,0 +1,76 @@
+{
+  "requested_at": "2026-11-11T15:10:51.567454+00:00",
+  "cpu_entropy": {
+    "N": 24,
+    "count": 30,
+    "indices": [
+      0,
+      29
+    ],
+    "seeds": [
+      831124000,
+      831124029
+    ],
+    "cpu_only": true,
+    "process_pid": 49522,
+    "output": "runs/cpu_entropy_N24",
+    "log": "logs/cpu_entropy_N24_23481414560b45b59b4af9cdc0e8018f.log",
+    "scan_policy": "initial_61_only",
+    "saved_per_instance": [
+      "couplings",
+      "61-field entropy scan",
+      "selected full ground-state vector",
+      "energies and gaps",
+      "host metadata",
+      "integrity receipt"
+    ]
+  },
+  "gpu_comparisons": {
+    "rounds": [
+      2,
+      3
+    ],
+    "N": [
+      6,
+      9,
+      12,
+      15,
+      18,
+      21
+    ],
+    "L": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "methods": [
+      "nov3",
+      "qaoa"
+    ],
+    "optimizers": {
+      "SPSA": "two cold starts, existing budgets",
+      "BFGS": "16 cold starts, existing budgets"
+    },
+    "indices": [
+      10,
+      29
+    ],
+    "additional_instances": 120,
+    "target_total_per_N_including_round1": 30,
+    "scan_policy": "initial_61_only",
+    "state": "running",
+    "validation_session": "runs/dual_gpu/sessions/validate-1c0e353951564df5af91406005da71fd",
+    "sequence_pid": 49750,
+    "sequence": "runs/dual_gpu/sequences/rounds-ed35e5512e3c4ac7bb12fa93c436f6cf",
+    "current_session": "runs/dual_gpu/sessions/launch-4b2c0c9458a64869aac3ebdd5d23d655",
+    "log": "logs/dual_rounds_2_3_852c06fac87f4d8baff68e89c5c60e60.log",
+    "validation_verdicts": {
+      "gpu0": "PASS",
+      "gpu1": "PASS"
+    }
+  },
+  "historical_note": "Round-1 N=6 and N=9 retain their original refined entropy scans; all newly computed scans use 61 initial fields only."
+}

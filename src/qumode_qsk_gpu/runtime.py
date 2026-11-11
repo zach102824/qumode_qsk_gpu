@@ -177,8 +177,8 @@ def _query(cp, device_id: int, activated: bool) -> RuntimeInfo:
             compute_capability=cc,
             total_bytes=total,
             fp64_support=fp64,
-            dtype_real=str(REAL),
-            dtype_cplx=str(CPLX),
+            dtype_real=np.dtype(REAL).name,
+            dtype_cplx=np.dtype(CPLX).name,
             numpy_version=npv,
             scipy_version=spv,
             activated=bool(activated),
@@ -262,7 +262,7 @@ def to_device(host, dtype=None):
     """Upload an array once. Callers must keep constants on device afterwards."""
     cp = xp()
     if is_device_array(host):
-        if dtype is not None and str(host.dtype) != str(np.dtype(dtype)):
+        if dtype is not None and np.dtype(host.dtype) != np.dtype(dtype):
             with device_context():
                 return host.astype(dtype, copy=False)
         return host
@@ -317,7 +317,7 @@ def library_versions():
     except Exception:
         numba_v = None
     out = dict(numpy=npv, scipy=spv, python=platform.python_version(),
-               numba=numba_v, dtype_real=str(REAL), dtype_cplx=str(CPLX))
+               numba=numba_v, dtype_real=np.dtype(REAL).name, dtype_cplx=np.dtype(CPLX).name)
     if _STATE["acquired"] and _STATE["info"] is not None:
         info = _STATE["info"]
         out.update(

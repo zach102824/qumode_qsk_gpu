@@ -1,0 +1,27 @@
+{
+  "snapshot_time": "2026-11-12T07:52:20.803928+08:00",
+  "completed_instances_by_N": {
+    "6": 30,
+    "9": 30,
+    "12": 30,
+    "15": 30,
+    "18": 25,
+    "21": 20
+  },
+  "N24_completed_references": 1,
+  "included_results": "Fully completed instances only; select lowest energy among 16 BFGS starts.",
+  "uncertainty": "Sample standard deviation (ddof=1), SEM=SD/sqrt(instances). No entropy-grid systematic error included.",
+  "scan_policy": "61 initial fields only for all newly computed scans. N=6 and N=9 retain 10 historical refined scans each.",
+  "gpu_sequence": {
+    "state": "running",
+    "pid": 49750,
+    "current_round": 3,
+    "rounds": [
+      2,
+      3
+    ],
+    "completed_rounds": [
+      2
+    ]
+  }
+}

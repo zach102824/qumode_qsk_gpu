@@ -186,4 +186,6 @@ def _finish(round_id, n_ok, n_fail, n_reused, results, man_path, extra_error=Non
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    from qumode_qsk_gpu.dual import lock
+    with lock(ROOT / "runs" / "dual_gpu" / "campaign.lock"):
+        raise SystemExit(main())

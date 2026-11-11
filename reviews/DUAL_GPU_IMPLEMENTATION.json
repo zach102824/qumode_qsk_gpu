@@ -1,0 +1,28 @@
+{
+  "production_started": false,
+  "host_tests": 30,
+  "validation_session": "runs/dual_gpu/sessions/validate-8f4c8958a95e4a9483bcf72a7951a401",
+  "gpus": [
+    {
+      "device": 0,
+      "verdict": "PASS",
+      "checks": 503,
+      "failures": 0,
+      "source_matches": true,
+      "device_matches": true
+    },
+    {
+      "device": 1,
+      "verdict": "PASS",
+      "checks": 503,
+      "failures": 0,
+      "source_matches": true,
+      "device_matches": true
+    }
+  ],
+  "legacy_read_only_audit": {
+    "entropy": 25,
+    "spsa": 26
+  },
+  "protocol_changed": false
+}

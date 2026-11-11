@@ -418,7 +418,8 @@ def test_bfgs_capped(m, cpu_m, entry, tols):
 
 
 def _scratch_tree(name="scratch_jobs"):
-    scratch = ROOT / "GPU_test" / name
+    import os
+    scratch = Path(os.environ.get("QSK_VALIDATION_SCRATCH", str(ROOT / "GPU_test"))) / name
     if scratch.exists():
         shutil.rmtree(scratch)
     dirs = {k: scratch / k for k in ("instances", "entropy", "references", "runs", "logs")}
@@ -462,7 +463,7 @@ def test_jobs_spsa_scratch(entry):
 
 
 def test_jobs_entropy_and_pack(entry, tols):
-    """N=6 task_entropy vs the fixture scan, then 16-start BFGS pack, then resume."""
+    """N=6 task_entropy vs fixture initial fields, then BFGS pack and resume."""
     from qumode_qsk_gpu import jobs
     if int(entry["N"]) != 6 or entry["kind"] != "entropy_reference":
         return []
@@ -475,15 +476,24 @@ def test_jobs_entropy_and_pack(entry, tols):
         espec = dict(task="entropy", N=n, seed=seed, index=entry.get("index"))
         rec = jobs.dispatch(espec, require_gate=False)
         failed = rec.get("verdict") == "FAIL" or rec.get("error")
-        # Same CPU oracle and libraries: b*, S, label must match the fixture scan.
+        # Historical fixtures contain the initial grid plus refined fields.
+        # Compare new production only against their unchanged initial 61 rows.
+        initial_bs = {round(0.01 + 0.05 * k, 9) for k in range(60)} | {3.0}
+        initial_rows = [r for r in scan['scan'] if round(float(r['b']), 9) in initial_bs]
+        expected_peak = max(initial_rows, key=lambda r: r['S'])
+        actual_scan = json.loads(Path(rec['paths']['scan']).read_text())
+        actual_bs = [round(float(r['b']), 9) for r in actual_scan['scan']]
+        grid_ok = (len(initial_rows) == 61 and len(actual_bs) == 61
+                   and set(actual_bs) == initial_bs
+                   and actual_scan.get('scan_policy', {}).get('name') == 'initial_61_only')
         b_tol = float(tols.get("entropy_scan_b_abs", 1e-15))
         s_tol = float(tols.get("entropy_scan_S_abs", 1e-12))
-        peak = (scan.get("peak") or scan)
-        db = abs(float(rec.get("b")) - float(entry["b"])) if rec.get("b") is not None else np.inf
-        dS = abs(float(rec.get("S")) - float(entry["S"])) if rec.get("S") is not None else np.inf
+        db = abs(float(rec.get("b")) - float(expected_peak["b"])) if rec.get("b") is not None else np.inf
+        dS = abs(float(rec.get("S")) - float(expected_peak["S"])) if rec.get("S") is not None else np.inf
         lab_ok = rec.get("label") == entry.get("label")
         rows.append(_record("jobs_entropy_scratch",
-                            (not failed) and db <= b_tol and dS <= s_tol and lab_ok,
+                            (not failed) and grid_ok and db <= b_tol and dS <= s_tol and lab_ok,
+                            grid_ok=grid_ok, n_fields=len(actual_bs),
                             d_b=db, d_S=dS, label=rec.get("label"),
                             expected_label=entry.get("label"),
                             valid_for_fits=rec.get("valid_for_fits"),

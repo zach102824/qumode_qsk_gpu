@@ -92,7 +92,7 @@ def entropy_device(gs, n, cut=SVD_CUT):
 
 
 def scan_bstar_cpu(n, seed, J, progress_path=None):
-    """Run the frozen CPU scan via package-qualified oracle imports (H4).
+    """Run the 61-point CPU scan via package-qualified oracle imports (H4).
 
     Returns (report, peak_gs) exactly as cpu_oracle.src.entropy.scan_bstar.
     """

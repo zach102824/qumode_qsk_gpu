@@ -1,0 +1,38 @@
+{
+  "time_utc": "2026-11-11T07:10:54Z",
+  "session": "runs/dual_gpu/sessions/launch-da8a77301d1f4b7a978a0ac4f5ba8e77",
+  "status": {
+    "0": {
+      "state": "running",
+      "pid": 16543,
+      "current": {
+        "N": 6,
+        "index": 2,
+        "seed": 831106002,
+        "round": 1
+      },
+      "done": 1,
+      "failed": 0
+    },
+    "1": {
+      "state": "running",
+      "pid": 16544,
+      "current": {
+        "N": 6,
+        "index": 3,
+        "seed": 831106003,
+        "round": 1
+      },
+      "done": 1,
+      "failed": 0
+    }
+  },
+  "data": {
+    "completed_instances": 2,
+    "hash_failures": 0,
+    "spsa_results": 24,
+    "bfgs_starts": 384,
+    "bfgs_packs": 24,
+    "legacy_optimizer_results_reused": 408
+  }
+}

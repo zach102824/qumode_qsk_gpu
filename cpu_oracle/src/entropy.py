@@ -155,7 +155,10 @@ def evaluate_field(base: Model, b, cache_ops=None):
 
 
 def scan_bstar(base: Model, progress_path=None):
-    """Same field grid and peak rule as the frozen protocol. Only the peak GS is retained.
+    """Scan the 61 initial fields only, with no refinement or extension.
+
+    This supersedes the original refined field selection for new production.
+    Historical fixture scans remain unchanged. Only the peak GS is retained.
 
     Intermediate full-space ground states are discarded after their entropy is recorded.
     This is required at N=21: caching every field GS is ~32 MiB each and was the 4 GiB leak.
@@ -200,22 +203,6 @@ def scan_bstar(base: Model, progress_path=None):
     for b in np.r_[np.arange(0.01, 3.0, 0.05), 3.0]:
         at(b)
     peak = max(cache.values(), key=lambda r: r["S"])
-    if peak["b"] == min(cache):
-        for b in np.arange(0.001, 0.01, 0.001):
-            at(b)
-    if peak["b"] == max(cache):
-        for b in np.arange(3.05, 6.00001, 0.05):
-            at(b)
-    peak = max(cache.values(), key=lambda r: r["S"])
-    lo, hi = min(cache), max(cache)
-    center = peak["b"]
-    for b in np.arange(max(lo, center - 0.05), min(hi, center + 0.05) + 1e-8, 0.005):
-        at(b)
-    peak = max(cache.values(), key=lambda r: r["S"])
-    center2 = peak["b"]
-    for b in np.arange(max(lo, center2 - 0.005), min(hi, center2 + 0.005) + 1e-8, 0.001):
-        at(b)
-    peak = max(cache.values(), key=lambda r: r["S"])
     ordered = sorted(cache)
     k = ordered.index(peak["b"])
     interior = 0 < k < len(ordered) - 1
@@ -246,6 +233,9 @@ def scan_bstar(base: Model, progress_path=None):
         valid_for_fits=bool(valid),
         neighbors=[left, right],
         scan=[cache[b] for b in ordered],
+        scan_policy=dict(name="initial_61_only", n_fields=61, start=0.01,
+                         step=0.05, stop=3.0, include_stop=True,
+                         refinement=False, boundary_extension=False),
         scan_resource=stats,
         field_selection_is_classical_benchmark_not_optimizer=True,
         coupling_variance="1/N",

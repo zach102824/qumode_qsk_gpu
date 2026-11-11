@@ -13,3 +13,15 @@ venv/
 
 # Private local GPU queue ledger and artifacts
 .local-gpu-runner/
+
+# Generated host state; publish compact result tables under summaries/ instead.
+/GPU_test/last_report.json
+/GPU_test/scratch_*/
+/data/
+/runs/*
+!/runs/.gitkeep
+/logs/*
+!/logs/.gitkeep
+/stamps/*
+!/stamps/.gitkeep
+/validation_backups/
