@@ -1,0 +1,18 @@
+{
+  "published": true,
+  "snapshot_shanghai": "2026-11-11 12:09:53 +08",
+  "source_root_original": "/workspace/qumode_qsk_gpu",
+  "n_included": 402,
+  "bytes_included": 2655373,
+  "cuda_validated": false,
+  "reviews": "ROUND 1 and ROUND 2 both returned CHANGES NEEDED; fix logs included; no third review; no GPU_TEST_PASS stamp shipped.",
+  "excluded": [
+    "Nothing required omission. No .env, credentials, or browser data were present.",
+    "Empty logs/, runs/, stamps/, summaries/ directories have .gitkeep so the layout is preserved."
+  ],
+  "git_identity": {
+    "name": "Zekun He",
+    "email": "84730686+zach102824@users.noreply.github.com",
+    "note": "GitHub account zach102824 (id 84730686). No user.name/email was set in existing git config, so the documented GitHub noreply address was used on the staging repo only."
+  }
+}

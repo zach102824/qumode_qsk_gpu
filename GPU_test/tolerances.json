@@ -1,0 +1,47 @@
+{
+  "note": "Proposed comparison tolerances for user-GPU GPU_test. They are not measurements from a GPU run in this authoring environment (no CUDA here). Tighten or loosen only with recorded evidence. BFGS full-trajectory bitwise agreement (uncapped) is not required; the capped (maxiter=3 and maxiter=1) driver comparison below is a PASS criterion.",
+  "dtype": "complex128 / float64",
+  "state_max_abs_vs_cpu_oracle": {
+    "N_le_15": 1e-12,
+    "N_ge_18": 1e-10,
+    "unit": "amplitude"
+  },
+  "energy_abs_vs_cpu_stored": {
+    "N_le_15": 1e-12,
+    "N_ge_18": 1e-10,
+    "unit": "energy"
+  },
+  "fidelity_abs_vs_cpu_stored": {
+    "N_le_15": 1e-12,
+    "N_ge_18": 1e-10
+  },
+  "norm_abs_vs_one": 1e-12,
+  "parity_abs_vs_stored": 1e-10,
+  "E0_residual": 1e-08,
+  "entropy_abs_vs_stored_S": 1e-10,
+  "grad_max_abs_vs_cpu_oracle": {
+    "N_le_15": 1e-10,
+    "N_ge_18": 1e-08
+  },
+  "grad_max_abs_vs_central_fd_eps_1e-7": 5e-07,
+  "plus_energy_abs": 1e-12,
+  "starts_x_must_match_exactly": true,
+  "direction_hashes_must_match_if_rerun": true,
+  "spsa_full_rerun_best_E": "report-only; may drift if GPU energies differ at 1e-14; not a PASS requirement",
+  "bfgs_full_rerun": "Uncapped 16-start trajectory identity is not a PASS requirement; SciPy line search can diverge after ULP energy differences. The capped BFGS driver check is a PASS requirement.",
+  "one_optimizer_step": "maxiter=1 BFGS vs the CPU oracle: E and g finite, dE / dx / dgrad within bfgs_capped_* tolerances, nit/nfev equal or fail as line-search divergence.",
+  "bfgs_capped_energy_abs": 1e-09,
+  "bfgs_capped_grad_l2_abs": 1e-07,
+  "bfgs_capped_x_max_abs": 1e-07,
+  "bfgs_capped_no_increase": 1e-09,
+  "bfgs_capped_nit_nfev_must_match": true,
+  "spsa_ledger_energy_abs": {
+    "N_le_15": 1e-12,
+    "N_ge_18": 1e-10,
+    "unit": "energy",
+    "note": "First K query-log energies (plus and minus separately) vs the CPU oracle SPSA run. Full-trajectory best_E remains report-only."
+  },
+  "spsa_ledger_prefix_queries": 20,
+  "entropy_scan_b_abs": 1e-15,
+  "entropy_scan_S_abs": 1e-12
+}

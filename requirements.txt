@@ -1,0 +1,19 @@
+# Requires Python 3.13.5 (the campaign interpreter). The gate enforces
+# python/numpy/scipy/numba unless --allow-version-drift is recorded.
+# Pin to the versions imported on the CPU-campaign machine at revision time
+# (see protocol/PROVENANCE_ADDENDUM.json). SciPy BFGS line search and the
+# NumPy Generator stream must match the campaign for "same optimizer / same starts".
+numpy==2.5.4
+scipy==1.18.1
+numba==0.68.0
+
+# Choose ONE CuPy wheel that matches the CUDA toolkit on the GPU host.
+# Do not install several of these in the same environment.
+# Inspect the host first: nvidia-smi  and/or  nvcc --version
+#
+#   CUDA 11.x  ->  pip install cupy-cuda11x
+#   CUDA 12.x  ->  pip install cupy-cuda12x
+#   CUDA 13.x  ->  pip install cupy-cuda13x
+#
+# If a wheel name fails, see https://docs.cupy.dev/en/latest/install.html
+# This authoring environment has no CUDA; CuPy was not installed here.

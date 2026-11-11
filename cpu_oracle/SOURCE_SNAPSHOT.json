@@ -1,0 +1,63 @@
+{
+  "title": "cpu_oracle source snapshot",
+  "note": "Copied from live /workspace/qumode_qsk/src at build time. This is the current audited CPU code, which postdates some hashes in protocol/PROTOCOL_FROZEN.json source_pins (kernels_numba and later hamiltonian/entropy/bfgs edits). Compare both pin lists.",
+  "source_campaign_root": "/workspace/qumode_qsk",
+  "built_shanghai": "2026-11-11 11:14:37 +08",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "6df43bef3cbb0a87b5fd1ba6beb9de43fc351d55646f91f1a8c6c4d67bc57e48",
+      "bytes": 1119
+    },
+    {
+      "path": "__init__.py",
+      "sha256": "0e810e51cdb45f1c40369f3e55203598a3c953f56f52c7da998dff37074a4437",
+      "bytes": 97
+    },
+    {
+      "path": "src/__init__.py",
+      "sha256": "50c7876f6c4c6dbe3deedd33bf261fb1d54d83613d246d04b5a9e2ec365802a6",
+      "bytes": 78
+    },
+    {
+      "path": "src/bfgs.py",
+      "sha256": "f6fc989a32b11a2b3800a35018ef256f8819fe6b1617e68f2104f3ff45a23e2b",
+      "bytes": 5598
+    },
+    {
+      "path": "src/entropy.py",
+      "sha256": "3f6440c08b20fcaa228cbcf92cf298d203e64ac092ca99a59a745a6791b4f766",
+      "bytes": 10294
+    },
+    {
+      "path": "src/hamiltonian.py",
+      "sha256": "769bd98a3bc55468fa15baa74d222018b30110b3064893863f4a14c25b4fb3eb",
+      "bytes": 12078
+    },
+    {
+      "path": "src/io_util.py",
+      "sha256": "f75b27bd8ac5fb2241bb52ebe98fec8387bca868cd9a7721c6540bfa18353802",
+      "bytes": 1510
+    },
+    {
+      "path": "src/kernels_numba.py",
+      "sha256": "b3e7a4c63d085770e49f3ba089d1f567aa62a68ec98967d00323aa55d562cb4c",
+      "bytes": 4883
+    },
+    {
+      "path": "src/protocol.py",
+      "sha256": "b78a5ebe598719de4c9ae25b2cfcb3d18598e0d116bf94bb4ecf67bcd17439ea",
+      "bytes": 1829
+    },
+    {
+      "path": "src/spsa.py",
+      "sha256": "8d42a22a88e655f814ba002b8b5b69953ca0c3a278194f3709c177061e8e8c51",
+      "bytes": 5663
+    },
+    {
+      "path": "src/starts.py",
+      "sha256": "03c1d355f8e0c633fc72603f1400762ebdf46d1700d75288db4a3fdde6d7e89a",
+      "bytes": 3095
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Provenance addendum for qumode_qsk_gpu (does not modify PROTOCOL_FROZEN.json)",
+  "written_shanghai": "2026-11-11 11:37:30 +08",
+  "do_not_edit_PROTOCOL_FROZEN_json": true,
+  "protocol_hashes": {
+    "note": "Two hashes are in circulation and must not be conflated. The file SHA-256 is of the exact bytes of protocol/PROTOCOL_FROZEN.json. The embedded protocol_sha256 is SHA-256 of the sorted compact JSON with the protocol_sha256 key removed. Neither was recomputed by rewriting the file.",
+    "protocol_file": "protocol/PROTOCOL_FROZEN.json",
+    "file_sha256": "8253fae8dcfc4f8242e980f446d9e8073364580e9fe9901b17060a7b69ffba96",
+    "embedded_protocol_sha256": "f32a96d4af337525edbbeea903b848d9b8c6163af3efa214f4ca71cd143cbb81",
+    "embedded_hash_verified_against_file_contents": true
+  },
+  "starts_py": {
+    "note": "cpu_oracle/src/starts.py is a write-guarded copy, not byte-identical to the campaign file. Only pack_panel_starts changed (it now requires an explicit out_dir so it cannot write into the live campaign tree). spsa_starts / all_starts / freeze_cell_starts recipes are unchanged.",
+    "original_path": "/workspace/qumode_qsk/src/starts.py",
+    "original_sha256": "0a39d54a19c23e8863f764a1f1117939d9fe1e7a3217927139178cd31be5698a",
+    "original_bytes": 2864,
+    "bundle_path": "cpu_oracle/src/starts.py",
+    "bundle_sha256": "03c1d355f8e0c633fc72603f1400762ebdf46d1700d75288db4a3fdde6d7e89a",
+    "bundle_bytes": 3095,
+    "MANIFEST_cpu_oracle_source_pins_records_the_original_campaign_hash": true,
+    "SOURCE_SNAPSHOT_records_the_bundled_bytes": true
+  },
+  "protocol_source_pins_predate_audited_code": {
+    "note": "PROTOCOL_FROZEN.json source_pins were written 2026-11-10 20:22 +08, before later campaign edits. The gpu cpu_oracle snapshot is the live audited CPU code as of the GPU tree build, which postdates those pins. This addendum documents the mismatch; the frozen protocol file is not edited.",
+    "protocol_text_bfgs_jacobian": "analytic forward-mode, pre-fit FD audit",
+    "audited_and_ported_jacobian": "reverse-mode, cross-checked against forward-mode and FD in the CPU campaign audit",
+    "files": {
+      "hamiltonian.py": {
+        "protocol_pin": "66efb69c\u2026 / 9915 B",
+        "oracle_live": "769bd98a3bc55468fa15baa74d222018b30110b3064893863f4a14c25b4fb3eb / 12078 B"
+      },
+      "bfgs.py": {
+        "protocol_pin": "8abd2b4b\u2026",
+        "oracle_live": "f6fc989a32b11a2b3800a35018ef256f8819fe6b1617e68f2104f3ff45a23e2b / 5598 B"
+      },
+      "entropy.py": {
+        "protocol_pin": "b157eae8\u2026",
+        "oracle_live": "3f6440c08b20fcaa228cbcf92cf298d203e64ac092ca99a59a745a6791b4f766 / 10294 B"
+      },
+      "kernels_numba.py": {
+        "protocol_pin": "not pinned at all",
+        "oracle_live": "b3e7a4c63d085770e49f3ba089d1f567aa62a68ec98967d00323aa55d562cb4c / 4883 B"
+      },
+      "spsa.py": {
+        "protocol_pin_matches_oracle": true,
+        "sha256": "8d42a22a88e655f814ba002b8b5b69953ca0c3a278194f3709c177061e8e8c51"
+      },
+      "protocol.py": {
+        "protocol_pin_matches_oracle": true,
+        "sha256": "b78a5ebe598719de4c9ae25b2cfcb3d18598e0d116bf94bb4ecf67bcd17439ea"
+      },
+      "io_util.py": {
+        "protocol_pin_matches_oracle": true,
+        "sha256": "f75b27bd8ac5fb2241bb52ebe98fec8387bca868cd9a7721c6540bfa18353802"
+      }
+    }
+  },
+  "fixture_producer": {
+    "note": "Fixture run JSONs (SPSA/BFGS/entropy results copied from the live MAIN campaign) do not carry source pins or a compiler timestamp that would prove which hamiltonian.py version produced each trajectory. The producer is therefore not proven from the bundle. This is labelled honestly; fixture history is not silently repaired.",
+    "scientifically_bounded": "E and F at a stored x depend only on the state map, which is the same in the later reverse-mode CPU code and this port. The gradient implementation affects only the trajectory that produced x. GPU gradients are compared against the bundled cpu_oracle, not against stored fixture gradients (those were not kept on disk).",
+    "copied_from": "/workspace/qumode_qsk data/*/main and runs/main",
+    "no_recompute_at_bundle_time": true
+  },
+  "campaign_library_versions_on_authoring_box": {
+    "note": "Read from the same machine that was running the CPU campaign at review-revision time (python3 import). The GPU host should install these exact versions so SciPy BFGS and NumPy RNG match the campaign. They are recorded in the GPU_TEST_PASS binding and in each result.",
+    "python": "3.13.5",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "numba": "0.68.0",
+    "enforced_by_gate": true,
+    "enforcement_note": "The production gate and GPU_test refuse unless python/numpy/scipy/numba equal these strings, unless an explicit --allow-version-drift is recorded (stamp and results are then unofficial). Added after review round 2; the pin values themselves are unchanged."
+  },
+  "fma_and_reductions": {
+    "note": "Stock CuPy elementwise may FMA-contract; RawKernels are compiled with --fmad=false. libm exp/cos/sin and reductions can still differ at ULP level, so bitwise CPU parity is not promised. Batch-2 vs batch-1 energy reductions of the same x can also differ at ULP level."
+  }
+}
