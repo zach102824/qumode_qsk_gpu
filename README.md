@@ -181,3 +181,9 @@ See `PUBLISH_SNAPSHOT.json` for the snapshot inventory. Empty `logs/`,
 
 Follow the quick start above: install the pinned stack, run GPU_test first,
 and start production only after a PASS on that machine.
+
+## Local approved GPU task queue
+
+See [Local GPU runner](docs/LOCAL_GPU_RUNNER.md) for owner approval, start/stop
+commands, isolated artifacts, and the offline one-task safety test. The runner
+supports validation, production planning, and gate verification only.

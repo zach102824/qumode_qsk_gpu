@@ -10,3 +10,6 @@ venv/
 .env.*
 *.lock
 .DS_Store
+
+# Private local GPU queue ledger and artifacts
+.local-gpu-runner/
