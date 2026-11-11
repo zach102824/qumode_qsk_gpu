@@ -60,8 +60,8 @@ def save_npz_atomic(path, **arrays):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
-    np.savez_compressed(tmp, **arrays)
-    with open(tmp, "rb") as f:
+    with open(tmp, "wb") as f:
+        np.savez_compressed(f, **arrays)
         f.flush()
         os.fsync(f.fileno())
     tmp.replace(path)
