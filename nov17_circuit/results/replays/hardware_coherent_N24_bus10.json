@@ -1,0 +1,183 @@
+{
+  "records": [
+    {
+      "standard_error": 0.0,
+      "cavity_only_standard_error": 0.0,
+      "cavity_only_note": "Trace all three transmons; ideal end reset would still be required for reuse.",
+      "samples": 1,
+      "dt_max_us": 0.005,
+      "cutoff": 24,
+      "seconds": 30.383494181995047,
+      "jump_events": 0,
+      "final_required": "all three transmons g; both cavities in logical space",
+      "jump_counts": {
+        "cavity_A_loss": 0,
+        "cavity_B_loss": 0,
+        "bus_relaxation": 0,
+        "bus_dephasing": 0,
+        "local_A_relaxation": 0,
+        "local_A_dephasing": 0,
+        "local_B_relaxation": 0,
+        "local_B_dephasing": 0
+      },
+      "postselection": false,
+      "noise": false,
+      "seed": 831106000,
+      "state_fidelity": 0.9665430188179016,
+      "cavity_only_state_fidelity": 0.9665882587432861,
+      "L": 1,
+      "initial_general_H": false,
+      "duration_us": 25.369015219719206,
+      "stages": [
+        {
+          "kind": "state_preparation",
+          "duration_us": 1.9098593171027438
+        },
+        {
+          "kind": "all_15_ZZ_bus_phase",
+          "layer": 0,
+          "duration_us": 10.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 0,
+          "duration_us": 11.45915590261646
+        },
+        {
+          "kind": "full_local_shell_Z",
+          "layer": 0,
+          "duration_us": 2.0
+        }
+      ],
+      "readout": "Common original-X frame; final H omitted. Final readout noise excluded.",
+      "local_chi_time": 72,
+      "local_chi_time_provenance": "Recovered from stored coherent_H stage duration during folder audit."
+    },
+    {
+      "standard_error": 0.0,
+      "cavity_only_standard_error": 0.0,
+      "cavity_only_note": "Trace all three transmons; ideal end reset would still be required for reuse.",
+      "samples": 1,
+      "dt_max_us": 0.005,
+      "cutoff": 24,
+      "seconds": 60.32408792700153,
+      "jump_events": 0,
+      "final_required": "all three transmons g; both cavities in logical space",
+      "jump_counts": {
+        "cavity_A_loss": 0,
+        "cavity_B_loss": 0,
+        "bus_relaxation": 0,
+        "bus_dephasing": 0,
+        "local_A_relaxation": 0,
+        "local_A_dephasing": 0,
+        "local_B_relaxation": 0,
+        "local_B_dephasing": 0
+      },
+      "postselection": false,
+      "noise": false,
+      "seed": 831106000,
+      "state_fidelity": 0.9644368290901184,
+      "cavity_only_state_fidelity": 0.9644935131072998,
+      "L": 1,
+      "initial_general_H": true,
+      "duration_us": 34.918311805232925,
+      "stages": [
+        {
+          "kind": "general_H_initial",
+          "duration_us": 11.45915590261646
+        },
+        {
+          "kind": "all_15_ZZ_bus_phase",
+          "layer": 0,
+          "duration_us": 10.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 0,
+          "duration_us": 11.45915590261646
+        },
+        {
+          "kind": "full_local_shell_Z",
+          "layer": 0,
+          "duration_us": 2.0
+        }
+      ],
+      "readout": "Common original-X frame; final H omitted. Final readout noise excluded.",
+      "local_chi_time": 72,
+      "local_chi_time_provenance": "Recovered from stored coherent_H stage duration during folder audit."
+    },
+    {
+      "standard_error": 0.0,
+      "cavity_only_standard_error": 0.0,
+      "cavity_only_note": "Trace all three transmons; ideal end reset would still be required for reuse.",
+      "samples": 1,
+      "dt_max_us": 0.005,
+      "cutoff": 24,
+      "seconds": 107.33310237100522,
+      "jump_events": 0,
+      "final_required": "all three transmons g; both cavities in logical space",
+      "jump_counts": {
+        "cavity_A_loss": 0,
+        "cavity_B_loss": 0,
+        "bus_relaxation": 0,
+        "bus_dephasing": 0,
+        "local_A_relaxation": 0,
+        "local_A_dephasing": 0,
+        "local_B_relaxation": 0,
+        "local_B_dephasing": 0
+      },
+      "postselection": false,
+      "noise": false,
+      "seed": 831106000,
+      "state_fidelity": 0.9495446681976318,
+      "cavity_only_state_fidelity": 0.9499698877334595,
+      "L": 2,
+      "initial_general_H": false,
+      "duration_us": 60.28732702495213,
+      "stages": [
+        {
+          "kind": "state_preparation",
+          "duration_us": 1.9098593171027438
+        },
+        {
+          "kind": "all_15_ZZ_bus_phase",
+          "layer": 0,
+          "duration_us": 10.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 0,
+          "duration_us": 11.45915590261646
+        },
+        {
+          "kind": "full_local_shell_Z",
+          "layer": 0,
+          "duration_us": 2.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 0,
+          "duration_us": 11.45915590261646
+        },
+        {
+          "kind": "all_15_ZZ_bus_phase",
+          "layer": 1,
+          "duration_us": 10.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 1,
+          "duration_us": 11.45915590261646
+        },
+        {
+          "kind": "full_local_shell_Z",
+          "layer": 1,
+          "duration_us": 2.0
+        }
+      ],
+      "readout": "Common original-X frame; final H omitted. Final readout noise excluded.",
+      "local_chi_time": 72,
+      "local_chi_time_provenance": "Recovered from stored coherent_H stage duration during folder audit."
+    }
+  ]
+}

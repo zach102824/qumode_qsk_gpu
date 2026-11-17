@@ -1,0 +1,104 @@
+NOV17 OPEN-SYSTEM BASELINE
+==========================
+
+Architecture: two cavities + local transmons q_A,q_B + shared bus q_b.
+Encoded spins: 3 per cavity, 6 total, binary Fock levels 0..7.
+Tensor order: (q_b, q_A, cavity_A, q_B, cavity_B).
+GPU policy: GPU 1 only by default; GPU 0 is reserved for other work.
+
+STATUS: cavity T1=600 us was supplied by the user. All other device
+numbers below are assumptions, not calibrated measurements.
+The user accepted unequal bus shifts; 1.0/1.3 MHz are illustrative values.
+
+Units: time us; h=H/hbar in rad/us; quoted MHz = cycles/us.
+Multiply every quoted detuning, chi, and drive quadrature by 2*pi
+when inserting it in h. Dissipative rates are in 1/us, NOT rad/us;
+do NOT multiply 1/T1, 1/T2, gamma_phi by 2*pi.
+
+Dissipator: D[L]rho=L*rho*L^dagger - {L^dagger*L,rho}/2.
+Master equation: d(rho)/dt=-i[h(t),rho] + sum_mu D[L_mu]rho.
+
+Operator convention in the methods: sigma_z=|e><e|-|g><g|;
+sigma_minus=|g><e|; sigma_plus=|e><g|.
+Pauli dispersive term: -sum_rj chi_rj*n_j*sigma_z,r/2.
+Pauli cavity detuning: Delta_tilde_c,j=Delta_c,j-sum_r chi_rj/2.
+The configured Delta_c,j is the ground-transmon cavity detuning.
+Omitted global energy: sum_r Delta_q,r/2; no number shift is dropped.
+
+CAVITIES
+  Cavity A: T1=600 us, kappa=0.00166666666667 /us = 1666.66666667 /s.
+    L_loss=sqrt(kappa)*a_A; sqrt(kappa)=0.0408248290464 us^(-1/2).
+    Number-dephasing coefficient=0 /us (baseline zero).
+  Cavity B: T1=600 us, kappa=0.00166666666667 /us = 1666.66666667 /s.
+    L_loss=sqrt(kappa)*a_B; sqrt(kappa)=0.0408248290464 us^(-1/2).
+    Number-dephasing coefficient=0 /us (baseline zero).
+
+TRANSMONS (relaxation plus PURE dephasing, independently for each)
+  local_A: T1=50 us, T2=30 us.
+    gamma1=0.02 /us; gamma2=0.0333333333333 /us.
+    gamma_phi=1/T2-1/(2*T1)=0.0233333333333 /us.
+    T_phi=42.8571428571 us.
+    L_relax=sqrt(gamma1)*sigma_minus; coefficient=0.141421356237 us^(-1/2).
+    L_phi=sqrt(gamma_phi/2)*sigma_z; coefficient=0.108012344973 us^(-1/2).
+    Backend uses the equivalent sqrt(2*gamma_phi)*|e><e| dissipator.
+  local_B: T1=50 us, T2=30 us.
+    gamma1=0.02 /us; gamma2=0.0333333333333 /us.
+    gamma_phi=1/T2-1/(2*T1)=0.0233333333333 /us.
+    T_phi=42.8571428571 us.
+    L_relax=sqrt(gamma1)*sigma_minus; coefficient=0.141421356237 us^(-1/2).
+    L_phi=sqrt(gamma_phi/2)*sigma_z; coefficient=0.108012344973 us^(-1/2).
+    Backend uses the equivalent sqrt(2*gamma_phi)*|e><e| dissipator.
+  bus: T1=50 us, T2=30 us.
+    gamma1=0.02 /us; gamma2=0.0333333333333 /us.
+    gamma_phi=1/T2-1/(2*T1)=0.0233333333333 /us.
+    T_phi=42.8571428571 us.
+    L_relax=sqrt(gamma1)*sigma_minus; coefficient=0.141421356237 us^(-1/2).
+    L_phi=sqrt(gamma_phi/2)*sigma_z; coefficient=0.108012344973 us^(-1/2).
+    Backend uses the equivalent sqrt(2*gamma_phi)*|e><e| dissipator.
+
+HAMILTONIAN PARAMETERS (MHz, multiply by 2*pi in h)
+  chi_local_A_MHz=1
+  chi_local_B_MHz=1
+  chi_bus_A_MHz=1
+  chi_bus_B_MHz=1.3
+  detuning_cavity_A_MHz=0
+  detuning_cavity_B_MHz=0
+  detuning_local_A_MHz=0
+  detuning_local_B_MHz=0
+  detuning_bus_MHz=8.05
+  Kerr_A_MHz=0
+  Kerr_B_MHz=0
+  cross_Kerr_MHz=0
+  exchange_MHz=0
+
+Drive bounds, per quadrature: cavity 0.25 MHz, transmon 1 MHz.
+No factor 1/2 in Omega_I*sigma_x-Omega_Q*sigma_y; resonant angular
+Rabi frequency is 2*sqrt(Omega_I^2+Omega_Q^2).
+
+EXCLUDED/UNKNOWN IN THE NOMINAL MODEL
+  Thermal excitation and finite-temperature baths: zero.
+  Cavity self-Kerr, cross-Kerr, direct exchange: zero in baseline.
+  No correlated baths, transmon f level/anharmonicity, bandwidth/filter
+  response, drive calibration drift, measurement/reset overhead, or
+  experimental detector errors have been supplied.
+  Dispersive critical-photon-number validity needs actual device g/Delta.
+  With the bus in g, its Pauli dispersive term cancels the associated
+  half-shift in the Pauli cavity detuning. Residual physical couplings
+  are not automatically eliminated by that state.
+
+SIMULATION CONVENTIONS
+  Default cavity cutoff N=24; Hilbert d=8*N^2=4608.
+  Quantum-jump timestep <= 0.005 us (5 ns in baseline).
+  Quantum jumps are one unraveling of the stated Lindblad equation.
+  Full circuits used 512 trajectories in the current Nov17 comparisons.
+  Local preparation was also evolved as a density matrix with symmetric
+  unitary/noise splitting. Dense full-circuit Liouvillian integration
+  was NOT performed. No noisy trajectories were postselected.
+  600 us is photon ENERGY lifetime. First loss from |n> has mean
+  waiting time T1/n; |7> gives 85.7 us, |7,7> gives 42.9 us.
+  Parameter changes invalidate old compiled pulses/calibration unless
+  they are revalidated; historical results retain their original values.
+
+Source of truth: config/noise_model.json; models/system.py implements
+the same Hamiltonian and collapse operators used by the trajectory code.
+Regenerate: python -m nov17_circuit.scripts.noise_spec

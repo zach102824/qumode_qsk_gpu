@@ -1,0 +1,15 @@
+{
+  "joint_bus_block_max_error": 0.0,
+  "local_grape_block_max_error": 0.0,
+  "documented_ansatz_state_max_error": 1.2658490090568385e-15,
+  "saved_states": 20,
+  "latex_pages": 6,
+  "latex_overfull_boxes": 0,
+  "unresolved_citations": 0,
+  "papers_checked": [
+    "arXiv:1503.01496",
+    "arXiv:1808.07960"
+  ],
+  "scope": "Documentation revision; existing waveforms and noise results unchanged.",
+  "notation_equivalence_checks": "pauli_notation_checks.json"
+}

@@ -1,0 +1,112 @@
+{
+  "verification": {
+    "states": 140,
+    "saved_states": 20,
+    "random_states": 120,
+    "max_errors": {
+      "phase_error": 7.105427357601002e-15,
+      "split_error": 5.417387826669829e-15,
+      "shell_error": 7.105427357601002e-15,
+      "z_state_error": 2.245330001452452e-15,
+      "x_frame_error": 4.9077163614563925e-15,
+      "same_as_old_physical_state_error": 0.0,
+      "energy_error": 2.4424906541753444e-14,
+      "magnetization_error": 1.0658141036401503e-14,
+      "chi_error": 3.6415315207705135e-14,
+      "x_histogram_shell_elision_error": 1.6653345369377348e-16
+    },
+    "min_saved_singles_only_fidelity": 0.8980117243219775,
+    "min_random_singles_only_fidelity": 3.297090985036432e-05
+  },
+  "assumptions": "cavity T1=600us; all three transmons T1/T2=50/30us; bus shifts 1/1.3MHz; no bandwidth or residual couplings",
+  "GPU": 1,
+  "rows": [
+    {
+      "L": 1,
+      "initial": "state_preparation",
+      "local_chi_time": 48,
+      "duration_us": 21.54929658551372,
+      "coherent_state_fidelity": 0.9467700123786926,
+      "noisy_state_fidelity": 0.4297088086605072,
+      "standard_error": 0.01769107775926402,
+      "cavity_only_noisy_fidelity": 0.4623669981956482,
+      "samples": 512,
+      "cutoff": 24
+    },
+    {
+      "L": 2,
+      "initial": "state_preparation",
+      "local_chi_time": 48,
+      "duration_us": 48.828171122335675,
+      "coherent_state_fidelity": 0.8967572450637817,
+      "noisy_state_fidelity": 0.15646988153457642,
+      "standard_error": 0.011821022749348613,
+      "cavity_only_noisy_fidelity": 0.18074268102645874,
+      "samples": 512,
+      "cutoff": 24
+    },
+    {
+      "L": 1,
+      "initial": "state_preparation",
+      "local_chi_time": 72,
+      "duration_us": 25.369015219719206,
+      "coherent_state_fidelity": 0.9665430188179016,
+      "noisy_state_fidelity": 0.35899361968040466,
+      "standard_error": 0.016876625473194424,
+      "cavity_only_noisy_fidelity": 0.3931073546409607,
+      "samples": 512,
+      "cutoff": 24
+    },
+    {
+      "L": 1,
+      "initial": "general_H",
+      "local_chi_time": 72,
+      "duration_us": 34.918311805232925,
+      "coherent_state_fidelity": 0.9644368290901184,
+      "noisy_state_fidelity": 0.2555909752845764,
+      "standard_error": 0.014719884307016921,
+      "cavity_only_noisy_fidelity": 0.28273335099220276,
+      "samples": 512,
+      "cutoff": 24
+    },
+    {
+      "L": 2,
+      "initial": "state_preparation",
+      "local_chi_time": 72,
+      "duration_us": 60.28732702495213,
+      "coherent_state_fidelity": 0.9495446681976318,
+      "noisy_state_fidelity": 0.1191224753856659,
+      "standard_error": 0.010189794832185258,
+      "cavity_only_noisy_fidelity": 0.1388297975063324,
+      "samples": 512,
+      "cutoff": 24
+    }
+  ],
+  "selected_by_noisy_point_estimate": {
+    "1": {
+      "L": 1,
+      "initial": "state_preparation",
+      "local_chi_time": 48,
+      "duration_us": 21.54929658551372,
+      "coherent_state_fidelity": 0.9467700123786926,
+      "noisy_state_fidelity": 0.4297088086605072,
+      "standard_error": 0.01769107775926402,
+      "cavity_only_noisy_fidelity": 0.4623669981956482,
+      "samples": 512,
+      "cutoff": 24
+    },
+    "2": {
+      "L": 2,
+      "initial": "state_preparation",
+      "local_chi_time": 48,
+      "duration_us": 48.828171122335675,
+      "coherent_state_fidelity": 0.8967572450637817,
+      "noisy_state_fidelity": 0.15646988153457642,
+      "standard_error": 0.011821022749348613,
+      "cavity_only_noisy_fidelity": 0.18074268102645874,
+      "samples": 512,
+      "cutoff": 24
+    }
+  },
+  "scope": "One saved instance, one ideal parameter vector per depth. Readout noise excluded. Not an overall optimum certificate."
+}

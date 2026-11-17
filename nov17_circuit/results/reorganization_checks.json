@@ -1,0 +1,18 @@
+{
+  "circuit_and_lindblad_unit_tests": 10,
+  "logical_equivalence_cases": 140,
+  "previous_system_hamiltonian_max_absolute_difference": 0.0,
+  "previous_control_hamiltonian_max_absolute_difference": 0.0,
+  "saved_measurement_example_energy_and_chi": "exact match",
+  "saved_8192_shot_allocation": [
+    179,
+    1243,
+    1291,
+    5479
+  ],
+  "latex_engine": "Tectonic 0.17.0; REVTeX 4.2 aps/prb reprint",
+  "pdf_pages": 4,
+  "gpu_work_launched_for_reorganization": false,
+  "old_workspace_deleted": true,
+  "note": "Migration checks only; retained noise simulations were not rerun."
+}

@@ -1,0 +1,167 @@
+{
+  "checks": {
+    "replay": [
+      {
+        "family": "grape",
+        "timestep_max_effect_error": 4.592321155455492e-05,
+        "cutoff_max_effect_error": 2.1941154719623546e-06
+      }
+    ]
+  },
+  "monte_carlo": [
+    {
+      "repetitions": 2000,
+      "seed": 831106005,
+      "L": 1,
+      "analytic": {
+        "seed": 831106005,
+        "L": 1,
+        "energy_bias_per_spin": -1.1102230246251565e-15,
+        "energy_sd_per_spin": 0.004867707243688239,
+        "energy_rmse_per_spin": 0.004867707243688239,
+        "chi_bias": 5.995204332975845e-15,
+        "chi_sd": 0.012795520842005338,
+        "chi_rmse": 0.012795520842005338,
+        "mean_abs_C_error": 6.411537967210279e-16,
+        "naive_square_chi_extra_bias": 0.000607601157201159,
+        "native_native_shots": 978,
+        "min_shots": 978,
+        "max_shots": 7214
+      },
+      "empirical_energy_sd_per_spin": 0.004895929008768906,
+      "empirical_chi_sd": 0.013072772301403256,
+      "empirical_energy_rmse_per_spin": 0.004896439142862933,
+      "empirical_chi_rmse": 0.013079793954569464,
+      "empirical_energy_bias_per_spin": -0.00013030917575096446,
+      "empirical_chi_bias": 0.0005187320478607926,
+      "scheme": "ideal"
+    },
+    {
+      "repetitions": 2000,
+      "seed": 831106005,
+      "L": 2,
+      "analytic": {
+        "seed": 831106005,
+        "L": 2,
+        "energy_bias_per_spin": -2.146431180941969e-15,
+        "energy_sd_per_spin": 0.004783896747080977,
+        "energy_rmse_per_spin": 0.004783896747080977,
+        "chi_bias": 1.3766765505351941e-14,
+        "chi_sd": 0.018752030750033677,
+        "chi_rmse": 0.018752030750033677,
+        "mean_abs_C_error": 1.1353186909109544e-15,
+        "naive_square_chi_extra_bias": 0.0005320695937738722,
+        "native_native_shots": 978,
+        "min_shots": 978,
+        "max_shots": 7214
+      },
+      "empirical_energy_sd_per_spin": 0.004683780507875183,
+      "empirical_chi_sd": 0.019222082647845355,
+      "empirical_energy_rmse_per_spin": 0.004685186841493354,
+      "empirical_chi_rmse": 0.019221970239377998,
+      "empirical_energy_bias_per_spin": 0.00015538595069678843,
+      "empirical_chi_bias": -0.0004247620434978394,
+      "scheme": "ideal"
+    },
+    {
+      "repetitions": 2000,
+      "seed": 831106005,
+      "L": 1,
+      "analytic": {
+        "seed": 831106005,
+        "L": 1,
+        "energy_bias_per_spin": 0.0004914260507813406,
+        "energy_sd_per_spin": 0.006700789440010175,
+        "energy_rmse_per_spin": 0.006718785506528574,
+        "chi_bias": 0.01201320623817348,
+        "chi_sd": 0.02081450943666021,
+        "chi_rmse": 0.024032497315295952,
+        "mean_abs_C_error": 0.009600804518771378,
+        "naive_square_chi_extra_bias": 0.001677630612968947,
+        "native_native_shots": 314,
+        "min_shots": 314,
+        "max_shots": 5349
+      },
+      "empirical_energy_sd_per_spin": 0.0067307325222332424,
+      "empirical_chi_sd": 0.020538206240118956,
+      "empirical_energy_rmse_per_spin": 0.0067418431615052865,
+      "empirical_chi_rmse": 0.02391044184711687,
+      "empirical_energy_bias_per_spin": 0.000415138902814786,
+      "empirical_chi_bias": 0.012251621228248855,
+      "scheme": "grape_ancilla"
+    },
+    {
+      "repetitions": 2000,
+      "seed": 831106005,
+      "L": 2,
+      "analytic": {
+        "seed": 831106005,
+        "L": 2,
+        "energy_bias_per_spin": 0.0030877321682343992,
+        "energy_sd_per_spin": 0.006792474788834535,
+        "energy_rmse_per_spin": 0.0074613540124901095,
+        "chi_bias": 0.0017478905808760992,
+        "chi_sd": 0.03099007888715473,
+        "chi_rmse": 0.03103933167635522,
+        "mean_abs_C_error": 0.008255923460058927,
+        "naive_square_chi_extra_bias": 0.0015641481154563136,
+        "native_native_shots": 314,
+        "min_shots": 314,
+        "max_shots": 5349
+      },
+      "empirical_energy_sd_per_spin": 0.006782475790321547,
+      "empirical_chi_sd": 0.03090179256151292,
+      "empirical_energy_rmse_per_spin": 0.007328623193605562,
+      "empirical_chi_rmse": 0.031046268414278707,
+      "empirical_energy_bias_per_spin": 0.002780241186745913,
+      "empirical_chi_bias": 0.003070416800440068,
+      "scheme": "grape_ancilla"
+    }
+  ],
+  "unseen_ansatz": {
+    "states": 40,
+    "distribution": "gamma and shell angles uniform [-pi,pi], template coefficients uniform [-1,1]; held-out seeds",
+    "records": [
+      {
+        "scheme": "grape_ancilla",
+        "estimator": "selected",
+        "summary": [
+          {
+            "L": 1,
+            "energy_rmse_per_spin": 0.006518222587932104,
+            "chi_rmse": 0.010809650838646353,
+            "mean_absolute_energy_bias_per_spin": 0.0014178583720337952,
+            "mean_absolute_chi_bias": 0.0034143446546371025
+          },
+          {
+            "L": 2,
+            "energy_rmse_per_spin": 0.006942249154198638,
+            "chi_rmse": 0.012906666011765672,
+            "mean_absolute_energy_bias_per_spin": 0.0022474787503592507,
+            "mean_absolute_chi_bias": 0.004123360532350506
+          }
+        ]
+      },
+      {
+        "scheme": "grape_ancilla",
+        "estimator": "exact_full_frame",
+        "summary": [
+          {
+            "L": 1,
+            "energy_rmse_per_spin": 0.007876848479133421,
+            "chi_rmse": 0.012664002805403472,
+            "mean_absolute_energy_bias_per_spin": 2.1501319243573866e-15,
+            "mean_absolute_chi_bias": 9.270362255620057e-15
+          },
+          {
+            "L": 2,
+            "energy_rmse_per_spin": 0.008029691133498745,
+            "chi_rmse": 0.013485408227497312,
+            "mean_absolute_energy_bias_per_spin": 1.5136618810214959e-15,
+            "mean_absolute_chi_bias": 1.1790568521519163e-14
+          }
+        ]
+      }
+    ]
+  }
+}

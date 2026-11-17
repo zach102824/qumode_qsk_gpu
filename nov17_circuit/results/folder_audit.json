@@ -1,0 +1,44 @@
+{
+  "strict_json_files": 60,
+  "saved_reference_states": 20,
+  "all15_phase_search": {
+    "pulses": 4,
+    "max_metric_error": 1.3322676295501878e-15
+  },
+  "shell_phase_search": {
+    "pulses": 6,
+    "max_metric_error": 0.0
+  },
+  "coherent_H": {
+    "pulses": 4,
+    "max_metric_error": 0.0,
+    "cutoff24_to32_differences": [
+      3.7539568897848596e-08,
+      3.1002728950735303e-07,
+      0.00020815977389343487,
+      2.319279786444639e-06
+    ]
+  },
+  "selected_preparation": {
+    "coherent_error": 0.0,
+    "density_matrix_error": 0.0
+  },
+  "readout_coherent_metric_max_error": 0.0,
+  "readout_effect_error_coherent": 0.0,
+  "readout_pulses_replayed_coherent": 20,
+  "readout_effect_error_loss": 0.0,
+  "readout_pulses_replayed_loss": 20,
+  "readout_effect_error_ancilla": 0.0,
+  "readout_pulses_replayed_ancilla": 20,
+  "historical_replay_schedules_verified": 10,
+  "noise_config_sha256": "a7106a438c1513c934a3e3ea4e82a970b6b95b6d4d20c67c112dae8a64bf7f29",
+  "methods_source_sha256": "e94e9bea7afb57f0b0c18cc81c24f3e737926f1da186e06666d197dbe4b43f4b",
+  "methods_pdf_sha256": "1ebb9bd62b2833fcbed0ed9b44dcb38813ac8b7979f644bbde29a4181ac2854e",
+  "unit_tests": {
+    "run": 23,
+    "passed": 20,
+    "skipped": 3
+  },
+  "timestamp_utc": "2026-11-17T09:00:59.340664+00:00",
+  "scope": "Retained artifacts replayed; historical full hardware runs not repeated. Optional GPU physics tests require NOV17_RUN_GPU_TESTS=1."
+}

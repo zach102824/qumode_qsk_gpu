@@ -1,0 +1,554 @@
+\documentclass[aps,prb,reprint,amsmath,amssymb,nofootinbib]{revtex4-2}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\newcommand{\ket}[1]{\lvert#1\rangle}
+\newcommand{\bra}[1]{\langle#1\rvert}
+\newcommand{\Diss}[1]{\mathcal{D}[#1]}
+\newcommand{\tr}{\operatorname{Tr}}
+\input{config_values.tex}
+\begin{document}
+\title{Methods: a driven--dissipative model for the Nov17 two-cavity circuit}
+\date{November 17, 2026}
+\begin{abstract}
+We specify the system Hamiltonian and Markovian noise model used for a
+two-cavity circuit controlled by two local transmons and one shared bus
+transmon. Each cavity encodes three binary spins, giving six encoded spins
+and three auxiliary physical qubits. The specification fixes operator,
+rotating-frame, drive-amplitude, and dephasing conventions so that
+density-matrix and quantum-trajectory calculations use the same generator.
+Numerical parameters are an illustrative baseline; only the cavity lifetime
+was supplied as a device value. This methods note is a model specification,
+not an experimental characterization or a published journal article.
+\end{abstract}
+\maketitle
+
+\section{Methods}
+\subsection{Architecture, Hilbert space, and encoding}
+
+The device contains two bosonic storage modes, labeled $A$ and $B$, local
+control transmons $q_A$ and $q_B$, and a transmon $q_b$ dispersively coupled
+to both modes. Figure~\ref{fig:architecture} shows the retained coupling
+graph. We approximate each transmon by $\{\ket{g},\ket{e}\}$ and write
+$a_j$ for the cavity annihilation operator and $n_j=a_j^\dagger a_j$ for
+photon number. We use the quantum-optics Pauli convention
+\begin{align}
+ \sigma_r^z&=\ket{e_r}\bra{e_r}-\ket{g_r}\bra{g_r},\\
+ \sigma_r^-&=\ket{g_r}\bra{e_r},\qquad
+ \sigma_r^+=\ket{e_r}\bra{g_r},\\
+ \sigma_r^x&=\sigma_r^++\sigma_r^-,\qquad
+ \sigma_r^y=-i(\sigma_r^+-\sigma_r^-).
+\end{align}
+Thus $\sigma_r^z\ket g=-\ket g$, $\sigma_r^z\ket e=\ket e$, and
+$\sigma_r^\pm=(\sigma_r^x\pm i\sigma_r^y)/2$.
+The physical-transmon operators $\sigma_r^\alpha$ are distinct from the
+encoded-spin operators $X_i,Z_i$. Tensor-product identities are implicit.
+All physical transmons are initialized in $g$.
+
+\begin{figure}[t]
+\centering
+\setlength{\unitlength}{1pt}
+\begin{picture}(235,104)
+\put(34,76){\oval(57,25)}\put(13,73){$q_A$ (local)}
+\put(199,76){\oval(57,25)}\put(179,73){$q_B$ (local)}
+\put(34,24){\oval(63,27)}\put(12,21){Cavity $A$}
+\put(199,24){\oval(63,27)}\put(178,21){Cavity $B$}
+\put(116,24){\oval(49,27)}\put(100,21){Bus $q_b$}
+\put(34,38){\line(0,1){25}}\put(42,48){$\chi_A$}
+\put(199,38){\line(0,1){25}}\put(207,48){$\chi_B$}
+\put(66,24){\line(1,0){25}}\put(69,35){$\chi_{bA}$}
+\put(141,24){\line(1,0){26}}\put(143,35){$\chi_{bB}$}
+\end{picture}
+\caption{Retained dispersive couplings. The two cavities encode six logical
+spins in total. The three transmons are auxiliary physical qubits; the bus
+is shared, whereas each local transmon addresses one cavity. No direct
+cavity--cavity exchange or cross-Kerr is included in the baseline.}
+\label{fig:architecture}
+\end{figure}
+
+For cavity cutoffs $N_A$ and $N_B$, the numerical tensor ordering is
+\begin{align}
+ \mathcal H={}&\mathbb C_{q_b}^{2}\otimes\mathbb C_{q_A}^{2}
+ \otimes\mathbb C_{c_A}^{N_A}\otimes\mathbb C_{q_B}^{2}
+ \otimes\mathbb C_{c_B}^{N_B},\\
+ d={}&8N_A N_B.
+\end{align}
+The logical subspace of each cavity uses Fock levels $0$--$7$, with
+$\ket{b_2b_1b_0}\leftrightarrow\ket{4b_2+2b_1+b_0}$.
+The spin groups are $\{0,2,4\}$ and $\{1,3,5\}$, in local
+least-significant-to-most-significant-bit order. The encoded space thus has
+dimension $8^2=64$. Simulations allow excursions beyond it; projection at
+analysis time is not accompanied by renormalization or postselection.
+
+\subsection{Dispersive Hamiltonian and control fields}
+
+Dispersive cavity--transmon descriptions and microwave control of bosonic
+modes are standard in circuit QED.\cite{Blais2021} A particularly relevant
+experimental precedent is the two-cavity/shared-transmon Hamiltonian in
+Eq.~(3) of Wang \emph{et al.},\cite{Wang2016} which also retains a third
+transmon level. We retain only its $g/e$ structure and add a local
+dispersive control transmon for each cavity. This is a modeling extension;
+the cited experiment does not implement our full five-component graph or
+the Nov17 encoded-spin ansatz.
+
+Let $h=H_{\mathrm{sys}}/\hbar$ denote an angular-frequency Hamiltonian.
+After transforming to the cavity and transmon drive frames and making a
+rotating-wave approximation, we use
+\begin{equation}
+ \boxed{\begin{aligned}
+ h(t)={}&\sum_{j=A,B}\widetilde\Delta_{c,j}n_j
+       +\sum_{r=A,B,b}\frac{\Delta_{q,r}}2\sigma_r^z\\
+ &-\frac12\sum_{r,j}\chi_{rj}n_j\sigma_r^z\\
+ &+\sum_{j=A,B}[\epsilon_j a_j^\dagger+\epsilon_j^*a_j]\\
+ &+\sum_{r=A,B,b}[\Omega_r\sigma_r^++\Omega_r^*\sigma_r^-]
+       +h_{\mathrm{res}} .
+ \end{aligned}}
+ \label{eq:system}
+\end{equation}
+This is the total effective Hamiltonian for all three transmons and both
+cavities; the envelopes depend on time. Its coupling matrix (rows
+$q_A,q_B,q_b$; columns $A,B$) is
+\begin{equation}
+ (\chi_{rj})=\begin{pmatrix}
+ \chi_A&0\\0&\chi_B\\\chi_{bA}&\chi_{bB}
+ \end{pmatrix}.
+\end{equation}
+We write $h=h_0+h_{\mathrm d}+h_{\mathrm{res}}$ to separate the fixed
+couplings from the applied drives.
+The baseline drift is explicitly
+\begin{align}
+ h_0={}&\sum_{j=A,B}\widetilde\Delta_{c,j}n_j
+       +\frac12\sum_{r=A,B,b}\Delta_{q,r}\sigma_r^z\nonumber\\
+     &-\frac{\chi_A}{2}n_A\sigma_A^z
+      -\frac{\chi_B}{2}n_B\sigma_B^z\nonumber\\
+     &-\frac12(\chi_{bA}n_A+\chi_{bB}n_B)\sigma_b^z .
+ \label{eq:drift}
+\end{align}
+The detunings in the simulation configuration refer to the cavity
+frequencies with all transmons in $g$. In Pauli notation this requires
+\begin{equation}
+ \widetilde\Delta_{c,j}=\Delta_{c,j}-\frac12\sum_r\chi_{rj}.
+ \label{eq:cavityshift}
+\end{equation}
+Here $\Delta_{c,j}$ and $\Delta_{q,r}$ are the configured mode-minus-drive
+angular detunings. We omit only the global scalar
+$\frac12\sum_r\Delta_{q,r}$ from $H/\hbar$; this does not affect any
+observable or the master equation. Equation~\eqref{eq:cavityshift} must
+be retained: a photon-number-dependent frequency shift is not a global
+energy offset. The $1/2$ in the coupling makes $\chi_{rj}$ the full
+transmon transition shift per photon. This is the usual Pauli dispersive
+form, with our explicitly negative shift convention.\cite{Blais2021}
+
+The complex drive envelopes are $\epsilon_j=\epsilon_{jI}+i\epsilon_{jQ}$
+and $\Omega_r=\Omega_{rI}+i\Omega_{rQ}$. We write
+\begin{align}
+ h_{\mathrm d}(t)={}&\sum_{j=A,B}
+       [\epsilon_j(t)a_j^\dagger+\epsilon_j^*(t)a_j]\nonumber\\
+ &+\sum_{r=A,B,b}
+       [\Omega_r(t)\sigma_r^++\Omega_r^*(t)\sigma_r^-].
+ \label{eq:drives}
+\end{align}
+Equivalently, the cavity quadratures multiply $(a+a^\dagger)$ and
+$i(a^\dagger-a)$. With $\Omega_r=\Omega_{rI}+i\Omega_{rQ}$, the transmon
+drive is $\Omega_{rI}\sigma_r^x-\Omega_{rQ}\sigma_r^y$.
+The minus sign follows from the Pauli convention defined above; it
+preserves the complex envelopes and I/Q samples of the stored waveforms.
+There are ten independent real controls. A resonant constant envelope
+has angular Rabi frequency $2|\Omega_r|$, so $\Omega_r$ is half the
+complex Rabi-frequency envelope in a convention that writes the drive
+with an overall $1/2$.
+
+For later residual-coupling studies, the implementation also permits
+\begin{align}
+ h_{\mathrm{res}}={}&\sum_{j=A,B}\frac{K_j}{2}n_j(n_j-1)
+       +K_{AB}n_A n_B\nonumber\\
+ &+J_{AB}(a_A^\dagger a_B+a_A a_B^\dagger).
+ \label{eq:residual}
+\end{align}
+All coefficients in Eq.~\eqref{eq:residual} are zero in the reported
+baseline. Their signs follow the equation as written. They are optional
+calibration parameters, not measured zeros. In particular, parking the bus
+in $g$ makes its dispersive contribution cancel the corresponding
+part of Eq.~\eqref{eq:cavityshift}, but does not in general
+eliminate higher-order interactions of a real device. Independent local
+control is exact only in the ideal retained graph with negligible residuals.
+
+\begin{table}[t]
+\caption{Symbols used in the system model. All detunings, dispersive shifts,
+and drive coefficients in $h$ are angular frequencies.}
+\label{tab:symbols}
+\begin{ruledtabular}
+\begin{tabular}{p{0.23\columnwidth}p{0.68\columnwidth}}
+$a_j,n_j$ & Cavity ladder and number operators, $j=A,B$.\\
+$q_A,q_B,q_b$ & Local control transmons and shared bus.\\
+$\sigma_r^z$ & Transmon Pauli operator; $g:-1$, $e:+1$.\\
+$\sigma_r^\pm$ & Transmon raising/lowering operators.\\
+$\Delta_{c,j},\Delta_{q,r}$ & Configured drive-frame detunings.\\
+$\widetilde\Delta_{c,j}$ & Pauli-form cavity detuning, Eq.~\eqref{eq:cavityshift}.\\
+$\chi_A,\chi_B$ & Local dispersive shifts.\\
+$\chi_{bA},\chi_{bB}$ & Shared-bus dispersive shifts.\\
+$\epsilon_j,\Omega_r$ & Complex cavity and transmon drives.\\
+$K_j,K_{AB},J_{AB}$ & Optional self-Kerr, cross-Kerr, and exchange.\\
+$\kappa_j,\gamma_{1r},\gamma_{\phi r}$ & Photon-loss, relaxation, and pure-dephasing rates.\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+\subsection{Numerical baseline and spectral selectivity}
+
+We use time in microseconds. Quoted frequencies in MHz are cycles per
+microsecond and are multiplied by $2\pi$ in $h$. In contrast, dissipative
+rates $1/T$ are used directly in $\mu\mathrm{s}^{-1}$, without $2\pi$.
+The baseline values are collected in Table~\ref{tab:parameters}. For the
+configured zero local and cavity detunings, the Pauli-form cavity
+coefficients are $\widetilde\Delta_{c,A}/(2\pi)=-1$ MHz and
+$\widetilde\Delta_{c,B}/(2\pi)=-1.15$ MHz. Thus
+\begin{align}
+ \frac{h_0}{2\pi\,\mathrm{MHz}}={}&-n_A-1.15n_B
+       -\frac{\ChiLA}{2}n_A\sigma_A^z
+       -\frac{\ChiLB}{2}n_B\sigma_B^z\nonumber\\
+ &+\frac12(\DeltaBus-\ChiBA\,n_A-\ChiBB\,n_B)\sigma_b^z .
+ \label{eq:numerical}
+\end{align}
+This differs from the stored Hamiltonian matrix only by the omitted
+global scalar $\Delta_{q,b}/2$.
+
+The bus detuning is chosen so that its carrier lies at the center of the
+logical joint-number manifold. Its conditional transition detuning is
+$\Delta_{q,b}-\chi_{bA}n_A-\chi_{bB}n_B$. At the assumed unequal shifts,
+the 64 logical pairs are distinct, with minimum separation $0.1$ MHz.
+Equal shifts would instead leave many pairs spectrally degenerate; an
+undriven bus in either energy eigenstate supplies separated frequency
+shifts, rather than an arbitrary joint phase.
+
+The shift values, coherence times, and ideal connectivity used here are
+assumptions; the references do not establish them for this device.
+
+\subsection{Which terms implement each operation?}
+
+\paragraph{Joint two-cavity SNAP.}
+Heeres \emph{et al.}\cite{Heeres2015} use a dispersive shift to resolve
+Fock-number-conditioned transmon transitions and a transmon drive to
+imprint selected phases, with the transmon returned to $g$. Their
+Eq.~(1) writes the dispersive term with $\ket e\bra e$ and a signed
+shift. Substituting $\ket e\bra e=(I+\sigma^z)/2$ gives the same Pauli
+structure used here, with the associated cavity-frequency shift and
+our chosen sign of $\chi$. Their experiment controls one storage mode
+(the other resonator is for readout); our joint phase gate is a two-storage-mode
+extension, using the shared dispersive structure of Ref.~\onlinecite{Wang2016}.
+
+During the joint gate only the bus drive is applied:
+$\epsilon_A=\epsilon_B=\Omega_A=\Omega_B=0$, $\Omega_b(t)\ne0$.
+With both local transmons in $g$, the ideal Hamiltonian decomposes into
+independent blocks labeled by $(n,m)$:
+\begin{align}
+ h_b^{(n,m)}(t)={}&-\frac{\chi_{bA}n+\chi_{bB}m}{2}I
+                     +\frac{\delta_{nm}}2\sigma_b^z\nonumber\\
+                 &+\Omega_b(t)\sigma_b^++\Omega_b^*(t)\sigma_b^-,\\
+ \delta_{nm}={}&\Delta_{q,b}-\chi_{bA}n-\chi_{bB}m.
+ \label{eq:busblock}
+\end{align}
+Here the configured cavity detunings and residuals are zero; constant
+spectator-transmon energies have been omitted. Although the first term
+is proportional to the identity within one bus block, its coefficient
+depends on $(n,m)$ and must be retained when computing cavity phases.
+The same
+waveform must steer every block to
+\begin{equation}
+ U_b^{(n,m)}(T)\ket g\simeq e^{-i\Phi_{nm}}\ket g,
+\end{equation}
+producing the joint SNAP target
+\begin{equation}
+ S_{AB}(\Phi)=\sum_{n,m=0}^{7}e^{-i\Phi_{nm}}
+                  \ket{n,m}\bra{n,m}.
+ \label{eq:jointsnap}
+\end{equation}
+Dispersive coupling provides number selectivity; the driven closed bus
+motion creates the phase. Neither free evolution with the bus fixed in
+$g$ nor two independent local SNAP gates creates an arbitrary joint
+phase. A phase table with genuinely nonseparable entries can entangle
+the cavities. Our stored pulses use optimal control of the bus I/Q
+envelopes to approximate Eq.~\eqref{eq:jointsnap}; they are not a literal
+sequence of ideal spectrally isolated geometric SNAP pulses.
+The small $0.1$-MHz minimum splitting makes finite-duration selectivity a
+control problem, not a guarantee from unequal shifts alone.
+
+Zhang \emph{et al.}\cite{Zhang2019} (arXiv:1808.07960) treat bichromatically driven, weakly anharmonic
+transmons and engineered bilinear mode coupling, including
+$g_{\rm BS}a_A^\dagger a_B+g_{\rm BS}^*a_Aa_B^\dagger$.
+That operation exchanges photons. Equation~\eqref{eq:jointsnap} is
+number-diagonal and uses a different control mechanism. We do not add
+that beam-splitter term or identify their two-tone SWAP protocol with
+our SNAP. Their analysis also shows why strong-drive dissipation can
+require a richer model than constant bare lifetimes.
+
+\paragraph{Local GRAPE for preparation or a Hadamard.}
+Park the bus in $g$ and set $\Omega_b=0$. With baseline residuals zero,
+the two local controls act in parallel under
+\begin{align}
+ h_j(t)={}&(\Delta_{c,j}-\chi_j/2)n_j
+             +\frac{\Delta_{q,j}}2\sigma_j^z\nonumber\\
+ &-\frac{\chi_j}{2}n_j\sigma_j^z\nonumber\\
+ &+\epsilon_j(t)a_j^\dagger+\epsilon_j^*(t)a_j\nonumber\\
+ &+\Omega_j(t)\sigma_j^++\Omega_j^*(t)\sigma_j^-,
+ \quad j=A,B.
+ \label{eq:localgrape}
+\end{align}
+GRAPE optimizes the four real drive quadratures per cavity; it is an
+optimization method, not another interaction term. The cavity drive
+mixes Fock populations, while the local transmon and its dispersive
+coupling supply number-dependent control.\cite{Krastanov2015}
+The preparation target is only
+\begin{equation}
+ U_j(T)\ket{g,0}\simeq\ket g\frac1{\sqrt8}
+                         \sum_{n=0}^{7}\ket n.
+\end{equation}
+The coherent Hadamard target is stronger:
+$U_j(T)\ket{g,n}\simeq\ket g H^{\otimes3}\ket n$ for every logical
+input $n$. Thus the shorter vacuum-to-plus preparation pulse need not
+implement a general Hadamard. During local diagonal-shell SNAP, set
+$\epsilon_j=0$ and shape $\Omega_j$ using the same local dispersive term.
+The drift couplings remain present in all stages; the schedule changes
+which drives are applied. Full noisy replay retains the whole
+Hamiltonian even if an auxiliary leaves $g$.
+
+\begin{table}[t]
+\caption{Current simulation baseline. Only the cavity lifetime was
+user-supplied. All other values are illustrative, not fitted device data.}
+\label{tab:parameters}
+\begin{ruledtabular}
+\begin{tabular}{ll}
+Parameter & Value\\ \hline
+$\chi_A/(2\pi),\chi_B/(2\pi)$ & $\ChiLA,\ChiLB$ MHz\\
+$\chi_{bA}/(2\pi),\chi_{bB}/(2\pi)$ & $\ChiBA,\ChiBB$ MHz\\
+$\Delta_{q,b}/(2\pi)$ & $\DeltaBus$ MHz\\
+Other configured detunings & $0$\\
+$|\epsilon_{jI,Q}|/(2\pi)$ bound & $\CavBound$ MHz\\
+$|\Omega_{rI,Q}|/(2\pi)$ bound & $\QBound$ MHz\\
+Cavity $T_1$ & $\CavityLife\,\mu\mathrm{s}$\\
+Each transmon $T_1,T_2$ & $\QOne,\QTwo\,\mu\mathrm{s}$\\
+Kerr, exchange, thermal population & $0$ in baseline\\
+Default cavity cutoff & $N_A=N_B=\Cutoff$\\
+Full-circuit jump step bound & $\JumpStep\,\mu\mathrm{s}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+\subsection{Lindblad generator and rate conventions}
+
+We assume independent, zero-temperature Markovian baths. The density
+operator of both cavities and all three transmons obeys\cite{Lindblad1976}
+\begin{align}
+ \dot\rho={}&-i[h(t),\rho]
+       +\sum_{j=A,B}\kappa_j\Diss{a_j}\rho\nonumber\\
+ &+\sum_{r=A,B,b}\left[
+       \gamma_{1r}\Diss{\sigma_r^-}\rho
+       +\frac{\gamma_{\phi r}}{2}\Diss{\sigma_r^z}\rho
+       \right],
+ \label{eq:lindblad}\\
+ \Diss{L}\rho={}&L\rho L^\dagger-\frac12\{L^\dagger L,\rho\}.
+\end{align}
+For each transmon, measured energy and coherence lifetimes would give
+\begin{equation}
+ \gamma_{1r}=\frac1{T_{1r}},\qquad
+ \gamma_{\phi r}=\frac1{T_{2r}}-\frac1{2T_{1r}}\geq0.
+ \label{eq:rates}
+\end{equation}
+Thus $T_2$ is not the pure-dephasing time. In the baseline,
+\begin{align}
+ \kappa_j&=1/600=0.00166667\;\mu\mathrm{s}^{-1},\\
+ \gamma_{1r}&=0.0200000\;\mu\mathrm{s}^{-1},\\
+ \gamma_{\phi r}&=0.0233333\;\mu\mathrm{s}^{-1},\\
+ T_{\phi r}&=42.8571\;\mu\mathrm{s}.
+\end{align}
+The implementation uses eight collapse operators,
+\begin{align}
+ L_{c,j}&=\sqrt{\kappa_j}\,a_j,\\
+ L_{1,r}&=\sqrt{\gamma_{1r}}\,\sigma_r^-,\\
+ L_{\phi,r}&=\sqrt{\gamma_{\phi r}/2}\,\sigma_r^z .
+ \label{eq:collapse}
+\end{align}
+This convention gives the coefficient $\gamma_{\phi r}/2$ in
+Eq.~\eqref{eq:lindblad}, so an otherwise idle transmon has coherence
+decay $\exp(-t/T_{2r})$. The simulation's excitation-diagonal dephasing
+operator generates exactly the same dissipator: adding a real multiple
+of the identity to a Hermitian collapse operator does not change its
+dissipator. The displayed Pauli convention is therefore physically
+equivalent to the retained numerical noise model.
+
+Here cavity $T_1$ is the photon-number energy lifetime, so
+$\langle n_j(t)\rangle=e^{-\kappa_jt}\langle n_j(0)\rangle$.
+The first photon-loss waiting time in $\ket n$ is $T_1/n$, rather than a
+state-independent encoded-spin lifetime. It is $85.7\,\mu\mathrm{s}$ for
+$\ket7$ and $42.9\,\mu\mathrm{s}$ for $\ket{7,7}$ at equal cavity
+lifetimes. Excursions above the logical levels during control must also
+be included when assessing loss exposure.
+
+Cavity number dephasing is zero in the baseline. It can be added as
+$\eta_j\Diss{n_j}\rho$, corresponding to
+$L_{n,j}=\sqrt{\eta_j}\,n_j$ and off-diagonal Fock decay
+$\exp[-\eta_j(n-m)^2t/2]$.
+Finite-temperature excitation, correlated baths, higher transmon levels,
+drive-dependent noise, and detector/reset errors are not inferred from
+the supplied lifetimes and are not included in Eq.~\eqref{eq:lindblad}.
+
+\subsection{Nov17 pulse scheduling and the simulated spin model}
+
+The device Hamiltonian~\eqref{eq:system} is distinct from the encoded
+variational objective,
+\begin{equation}
+ H_{\mathrm{SK}}=\sum_{i<j}J_{ij}Z_iZ_j-B\sum_iX_i.
+\end{equation}
+The latter is not an additional drift term during microwave pulses.
+We now specify the matrices used by the unchanged Nov3 ansatz. In fixed
+spin-energy units, $J=J^T$, $J_{ii}=0$, and independent upper-triangle
+entries satisfy $J_{ij}\sim\mathcal N(0,1/6)$. Set
+$G_A=\{0,2,4\}$ and $G_B=\{1,3,5\}$, and define
+\begin{align}
+ K^{(0)}_{ij}&=\begin{cases}
+       \sum_{s=0}^{5}J_{is}J_{sj},&i\ne j,\\0,&i=j,
+       \end{cases}\\
+ \bar J_{AB}&=\frac19\sum_{i\in G_A}\sum_{j\in G_B}J_{ij},\\
+ M^{(0)}_{ij}&=\begin{cases}
+       \bar J_{AB},&i\in G_A,j\in G_B\text{ or vice versa},\\
+       0,&\text{otherwise}.
+       \end{cases}
+\end{align}
+For a symmetric matrix $Q$, let
+\begin{align}
+ r(Q)&=\left[\frac1{15}\sum_{i<j}Q_{ij}^2\right]^{1/2},\\
+ K&=\frac{r(J)}{r(K^{(0)})}K^{(0)},\qquad
+ M=\frac{r(J)}{r(M^{(0)})}M^{(0)}.
+\end{align}
+A zero template is left zero. Thus $K$ is a normalized off-diagonal
+\emph{matrix square}, not the square of the many-spin Hamiltonian;
+$M$ is a normalized constant cross-cavity template. Both still multiply
+two-spin Pauli operators. The shared cost gate in every layer is
+\begin{align}
+ A&=\gamma(J+aK+bM),\\
+ C_Z&=\exp\!\left[-i\sum_{i<j}A_{ij}Z_iZ_j\right].
+ \label{eq:cost}
+\end{align}
+The parameters $\gamma,a,b$ are shared across layers, not independently
+chosen for each layer. Their combination makes $A_{ij}$ dimensionless
+phase angles. The local shell is
+\begin{align}
+ \hat k_j&=\sum_{i\in G_j}\frac{I-Z_i}{2},\quad j=A,B,\\
+ f_\ell(k)&=b_{\ell1}k+b_{\ell2}{k\choose2}
+                         +b_{\ell3}{k\choose3},\\
+ S_\ell^Z&=\exp\!\left[-i\sum_{j=A,B}f_\ell(\hat k_j)\right].
+\end{align}
+Here $k$ is the Hamming weight of the three bits, not the Fock number;
+the same three $b_{\ell p}$ apply to both cavities. This shell contains
+local $Z$, $ZZ$, and $ZZZ$ contributions and must not be replaced by
+single-$Z$ rotations alone. With $W=H^{\otimes6}$, the evolving state is
+\begin{align}
+ \ket{\psi_0}&=W\ket0^{\otimes6}=\ket+^{\otimes6},\\
+ \ket{\psi_\ell}&=W S_\ell^Z W C_Z\ket{\psi_{\ell-1}},\\
+ \ket{\psi_L(\bm\theta)}&=
+  (W S_L^Z W C_Z)\cdots(W S_1^Z W C_Z)W\ket0^{\otimes6}.
+ \label{eq:ansatzstate}
+\end{align}
+Operators act from right to left, with $3+3L$ variational parameters.
+Each $W$ is two local three-bit Hadamards in parallel; the first $W$ on
+vacuum can use the less restrictive preparation target above.
+
+For implementation, write the bits of $n$ on $G_A$ and those of $m$ on
+$G_B$ as $s_i(n,m)\in\{0,1\}$. Then the joint SNAP phase table is
+\begin{equation}
+ \Phi_{nm}=\sum_{i<j}A_{ij}
+           [1-2s_i(n,m)][1-2s_j(n,m)].
+\end{equation}
+All 15 cost terms commute: six are within cavities (three per cavity)
+and nine are cross-cavity. The retained implementation compiles their
+\emph{complete} phase table into one bus pulse. They can alternatively
+be factored into local and joint SNAPs, but that is not the stored
+all-15 pulse schedule.
+
+Omitting the last $W$ changes the output coordinates to the original-$X$
+frame. Native Fock readout then supplies original-$X$ observables, whereas
+a final calibrated measurement basis change supplies original-$Z$
+correlations. This is the same logical state with consistently transformed
+observables. A phase-free readout transformation is suitable at the final
+measurement boundary, but an interior $W$ requires coherent control.
+
+\subsection{Numerical realization and scope of existing simulations}
+
+The numerical Hamiltonian is piecewise constant in the ten real drive
+quadratures, with fixed drift present throughout each operation. For
+$N_A=N_B=24$, the Hilbert-space dimension is $4608$. The same Hamiltonian
+and collapse operators can be used in a density-matrix ordinary
+differential equation, without constructing a $d^2\times d^2$
+Liouvillian matrix.
+
+Existing full-circuit noisy runs instead use the quantum-jump
+unraveling,\cite{Dalibard1992} whose ensemble approaches
+Eq.~\eqref{eq:lindblad}. Between jumps the unnormalized state evolves
+under
+\begin{equation}
+ h_{\mathrm{eff}}(t)=h(t)-\frac{i}{2}\sum_\mu L_\mu^\dagger L_\mu.
+\end{equation}
+The norm determines the no-jump probability; jump channels are selected
+with weights proportional to $\|L_\mu\ket\psi\|^2$.
+Reported Nov17 comparisons used 512 trajectories and a maximum jump
+step of $5$ ns on GPU~1. No failed trajectories were discarded.
+Finite-step error and Monte Carlo uncertainty remain distinct from
+uncertainty in the assumed device parameters. Local preparation was
+also checked by density-matrix propagation with symmetric unitary/noise
+splitting. A full-circuit dense density-matrix integration has not yet
+been performed.
+
+Algebraic verification on 20 saved and 120 random parameter sets confirms
+that the Nov17 ordering reproduces the original Nov3 ansatz and both
+output frames to numerical roundoff. Pulse searches and noisy
+preparation comparisons are finite tests, not certificates of optimal
+control. Cavity-cutoff convergence tests address numerical truncation;
+they do not establish the physical validity of a dispersive model at
+high photon number. That requires the actual coupling-to-detuning
+ratios, transmon anharmonicities, and critical photon numbers.
+The present model is therefore a reproducible starting point for future
+Lindblad studies and device calibration, not a substitute for that
+calibration.
+
+
+\subsection{Using the Hamiltonian for noisy evolution}
+
+Insert each compiled waveform into Eq.~\eqref{eq:system} to obtain the
+piecewise time-dependent $h(t)$. Initialize the two cavities in vacuum
+and all three transmons in $g$, so $\rho(0)=\ket{g,g,0,g,0}
+\bra{g,g,0,g,0}$ in our tensor order. Integrate Eq.~\eqref{eq:lindblad}
+through preparation, cost, mixer, and any readout pulse with the same
+drift and baths active throughout. The baseline noise channels are:
+\begin{itemize}
+ \item \emph{Cavity photon loss:} energy escapes to the environment;
+ each cavity uses $T_{1c}=600\,\mu\mathrm{s}$,
+ $L=\sqrt{1/T_{1c}}\,a$. Photon loss changes the encoded Fock state.
+ \item \emph{Transmon relaxation:} each local transmon and the bus can
+ decay $e\to g$; the assumed $T_{1q}=50\,\mu\mathrm{s}$ sets
+ $L=\sqrt{1/T_{1q}}\,\sigma^-$.
+ \item \emph{Transmon pure dephasing:} unresolved frequency fluctuations
+ randomize phase without directly removing energy. The assumed
+ $T_{2q}=30\,\mu\mathrm{s}$ together with $T_{1q}$ gives
+ $\gamma_\phi=1/T_{2q}-1/(2T_{1q})$ and
+ $L=\sqrt{\gamma_\phi/2}\,\sigma^z$.
+ \item \emph{Optional cavity dephasing:} cavity frequency fluctuations
+ can be modeled by $L=\sqrt{\eta_j}\,n_j$; $\eta_j=0$ in this baseline.
+ Thermal excitation and correlated noise are not included.
+\end{itemize}
+These are effective Markovian descriptions, not a determination of the
+microscopic loss source from the lifetimes. Only the cavity lifetime was
+user supplied. Trace out the transmons at the end, keeping leakage
+rather than postselecting it away. Energy and correlations follow from
+$\langle O\rangle=\tr(\rho O)$ with the appropriate encoding and readout
+operators. In particular,
+$E=\sum_{i<j}J_{ij}\langle Z_iZ_j\rangle-B\sum_i\langle X_i\rangle$;
+the project's spin-glass indicator is
+$\chi_{\rm SG}=\frac16\sum_{i,j}\langle Z_iZ_j\rangle^2$
+(including $i=j$), computed from the ensemble correlations. It is
+neither an extra Hamiltonian term nor a single-copy linear observable.
+Quantum-jump sampling provides a memory-efficient alternative to density
+matrix integration of the same generator; finite-shot measurement noise
+is an additional sampling step, distinct from these physical channels.
+\bibliographystyle{apsrev4-2}
+\bibliography{references}
+\end{document}

@@ -1,0 +1,7 @@
+{
+  "pauli_hamiltonian_error_after_global_offset": 1.2434497875801753e-14,
+  "full_lindblad_rhs_error": 2.779024842816778e-16,
+  "global_offset_rad_per_us": 25.44690049407733,
+  "transmon_sigma_z_convention": "|e><e|-|g><g|",
+  "physical_model_changed": false
+}

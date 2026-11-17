@@ -1,0 +1,88 @@
+{
+  "records": [
+    {
+      "scheme": "grape_ancilla",
+      "scenario": "T1_540",
+      "calibration": "nominal, not updated",
+      "summary": [
+        {
+          "L": 1,
+          "energy_rmse_per_spin": 0.007168542175923844,
+          "chi_rmse": 0.027421489355587032,
+          "mean_absolute_energy_bias_per_spin": 0.0018660191376426902,
+          "mean_absolute_chi_bias": 0.007854504360852532
+        },
+        {
+          "L": 2,
+          "energy_rmse_per_spin": 0.007742577202255601,
+          "chi_rmse": 0.048023055634572646,
+          "mean_absolute_energy_bias_per_spin": 0.0031787972965529195,
+          "mean_absolute_chi_bias": 0.020924046220780212
+        }
+      ]
+    },
+    {
+      "scheme": "grape_ancilla",
+      "scenario": "T1_660",
+      "calibration": "nominal, not updated",
+      "summary": [
+        {
+          "L": 1,
+          "energy_rmse_per_spin": 0.007639985998239999,
+          "chi_rmse": 0.03154741592114114,
+          "mean_absolute_energy_bias_per_spin": 0.0030589088526721047,
+          "mean_absolute_chi_bias": 0.0157567003198396
+        },
+        {
+          "L": 2,
+          "energy_rmse_per_spin": 0.007775850920980979,
+          "chi_rmse": 0.04495190368004518,
+          "mean_absolute_energy_bias_per_spin": 0.003250061901037271,
+          "mean_absolute_chi_bias": 0.02151077841328166
+        }
+      ]
+    },
+    {
+      "scheme": "grape_ancilla",
+      "scenario": "assignment_0.1pct",
+      "calibration": "nominal, not updated",
+      "summary": [
+        {
+          "L": 1,
+          "energy_rmse_per_spin": 0.007058098356815137,
+          "chi_rmse": 0.027399599206042725,
+          "mean_absolute_energy_bias_per_spin": 0.0015844520999865517,
+          "mean_absolute_chi_bias": 0.007257569976889399
+        },
+        {
+          "L": 2,
+          "energy_rmse_per_spin": 0.007306020754718535,
+          "chi_rmse": 0.04138705546234011,
+          "mean_absolute_energy_bias_per_spin": 0.002288168913801947,
+          "mean_absolute_chi_bias": 0.014248509981401503
+        }
+      ]
+    },
+    {
+      "scheme": "grape_ancilla",
+      "scenario": "assignment_1pct",
+      "calibration": "nominal, not updated",
+      "summary": [
+        {
+          "L": 1,
+          "energy_rmse_per_spin": 0.01034659436073096,
+          "chi_rmse": 0.035837232275726334,
+          "mean_absolute_energy_bias_per_spin": 0.007265707637761102,
+          "mean_absolute_chi_bias": 0.02238365546701553
+        },
+        {
+          "L": 2,
+          "energy_rmse_per_spin": 0.011953912996898075,
+          "chi_rmse": 0.0759332284533465,
+          "mean_absolute_energy_bias_per_spin": 0.008955374411365144,
+          "mean_absolute_chi_bias": 0.04842400731371477
+        }
+      ]
+    }
+  ]
+}

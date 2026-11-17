@@ -1,0 +1,18 @@
+{
+  "N": 6,
+  "seed": 831106009,
+  "L": 1,
+  "method": "nov3",
+  "b": 0.21,
+  "x": [
+    0.5042145433641735,
+    -0.6154465048969548,
+    -0.09436290546980176,
+    1.0959732574651357,
+    -0.11763130871986942,
+    0.1651645679453298
+  ],
+  "best_E": -2.9266912314540705,
+  "original_source": "runs/dual_gpu/instances/N6_seed831106009/attempt-8bae278986c6415b8f6fc71940303a90/runs/spsa_N6_seed831106009_L1_nov3.json",
+  "original_source_sha256": "ca0d18c27893c3a8a63eac5547d2ad6a786b1d611dfc1d23d59b5af4dbb67f06"
+}

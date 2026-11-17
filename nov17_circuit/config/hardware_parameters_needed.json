@@ -1,0 +1,12 @@
+{
+  "chi_rad_per_second": null,
+  "cavity_Kerr_rad_per_second": null,
+  "cavity_drive_quadrature_bounds_rad_per_second": null,
+  "ancilla_drive_quadrature_bounds_rad_per_second": null,
+  "pulse_bandwidth_hz": null,
+  "cavity_T1_seconds": 0.0006,
+  "cavity_pure_dephasing_rate_per_second": null,
+  "ancilla_T1_seconds": null,
+  "ancilla_T2_seconds": null,
+  "note": "Only cavity T1=600 us was supplied. Other physical parameters require calibration; see README.md."
+}

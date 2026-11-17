@@ -1,0 +1,28 @@
+{
+  "average_gate_fidelity": 0.7553717494010925,
+  "standard_error": 0.008358265334562895,
+  "cavity_only_average_fidelity": 0.7687942385673523,
+  "cavity_only_standard_error": 0.008076264063899044,
+  "cavity_only_note": "Trace all three transmons; ideal end reset would still be required for reuse.",
+  "samples": 2048,
+  "dt_max_us": 0.005,
+  "cutoff": 8,
+  "seconds": 2.598656886999379,
+  "jump_events": 675,
+  "final_required": "all three transmons g; both cavities in logical space",
+  "jump_counts": {
+    "cavity_A_loss": 100,
+    "cavity_B_loss": 92,
+    "bus_relaxation": 156,
+    "bus_dephasing": 327,
+    "local_A_relaxation": 0,
+    "local_A_dephasing": 0,
+    "local_B_relaxation": 0,
+    "local_B_dephasing": 0
+  },
+  "postselection": false,
+  "noise": true,
+  "seed": 161119,
+  "exact_cavity_only_fidelity": 0.7558187977486571,
+  "difference": 0.012975440818695172
+}

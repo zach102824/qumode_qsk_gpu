@@ -1,0 +1,92 @@
+{
+  "records": [
+    {
+      "seed": 831106000,
+      "bus_duration_us": 10.0,
+      "cutoff": 24,
+      "metrics": {
+        "average_gate_fidelity": 0.9673663155827013,
+        "process_overlap": 0.9672884134180793,
+        "mean_logical_survival": 0.9723520541185104,
+        "mean_leakage": 0.027647945881489555
+      }
+    },
+    {
+      "seed": 831106000,
+      "bus_duration_us": 10.0,
+      "cutoff": 32,
+      "metrics": {
+        "average_gate_fidelity": 0.9674226287492403,
+        "process_overlap": 0.9673447125281591,
+        "mean_logical_survival": 0.9724092668984397,
+        "mean_leakage": 0.02759073310156035
+      }
+    },
+    {
+      "seed": 831106000,
+      "bus_duration_us": 20.0,
+      "cutoff": 24,
+      "metrics": {
+        "average_gate_fidelity": 0.977028370736335,
+        "process_overlap": 0.977019086401607,
+        "mean_logical_survival": 0.9776225681589258,
+        "mean_leakage": 0.022377431841074213
+      }
+    },
+    {
+      "seed": 831106000,
+      "bus_duration_us": 20.0,
+      "cutoff": 32,
+      "metrics": {
+        "average_gate_fidelity": 0.9770274032034146,
+        "process_overlap": 0.9770180950686702,
+        "mean_logical_survival": 0.9776231238270603,
+        "mean_leakage": 0.022376876172939708
+      }
+    },
+    {
+      "seed": 831106006,
+      "bus_duration_us": 10.0,
+      "cutoff": 24,
+      "metrics": {
+        "average_gate_fidelity": 0.9647676606791282,
+        "process_overlap": 0.9647039854145554,
+        "mean_logical_survival": 0.968842877611795,
+        "mean_leakage": 0.031157122388205005
+      }
+    },
+    {
+      "seed": 831106006,
+      "bus_duration_us": 10.0,
+      "cutoff": 32,
+      "metrics": {
+        "average_gate_fidelity": 0.9648179273580815,
+        "process_overlap": 0.9647542442150007,
+        "mean_logical_survival": 0.9688936485152577,
+        "mean_leakage": 0.03110635148474228
+      }
+    },
+    {
+      "seed": 831106006,
+      "bus_duration_us": 20.0,
+      "cutoff": 24,
+      "metrics": {
+        "average_gate_fidelity": 0.9782546363453369,
+        "process_overlap": 0.9782458622784227,
+        "mean_logical_survival": 0.9788161766278485,
+        "mean_leakage": 0.021183823372151522
+      }
+    },
+    {
+      "seed": 831106006,
+      "bus_duration_us": 20.0,
+      "cutoff": 32,
+      "metrics": {
+        "average_gate_fidelity": 0.9782826045534493,
+        "process_overlap": 0.9782738194716664,
+        "mean_logical_survival": 0.9788448497875577,
+        "mean_leakage": 0.021155150212442297
+      }
+    }
+  ]
+}

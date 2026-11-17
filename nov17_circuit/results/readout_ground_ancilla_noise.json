@@ -1,0 +1,33 @@
+{
+  "coherent": {
+    "measurement_fidelity": 0.9904085740570537,
+    "process_overlap": 0.08152529715884915,
+    "average_fidelity": 0.1825995369347984,
+    "mean_leakage": 0.008806544857607568,
+    "worst_input_leakage": 0.01745857796441101
+  },
+  "noise": {
+    "duration_us": 7.6394372684109735,
+    "chi_over_2pi_MHz": 1.0,
+    "noise_model": "cavity+ancilla damping/dephasing",
+    "metrics": {
+      "measurement_fidelity": 0.830765816982374,
+      "average_fidelity": 0.1608678937927156,
+      "process_overlap": 0.06901027509396804,
+      "mean_leakage": 0.10427115661730402,
+      "trace": 0.9999999999999821
+    }
+  },
+  "finer_timestep": {
+    "duration_us": 7.6394372684109735,
+    "chi_over_2pi_MHz": 1.0,
+    "noise_model": "cavity+ancilla damping/dephasing",
+    "metrics": {
+      "measurement_fidelity": 0.8307709528343641,
+      "average_fidelity": 0.16086874068601884,
+      "process_overlap": 0.06901073078841875,
+      "mean_leakage": 0.1042671801331807,
+      "trace": 0.9999999999999686
+    }
+  }
+}

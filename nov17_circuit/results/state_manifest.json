@@ -1,0 +1,124 @@
+{
+  "records": [
+    {
+      "seed": 831106000,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106000_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106000/attempt-6350f382f0904912abe881166b9c085e/runs/spsa_N6_seed831106000_L1_nov3.json"
+    },
+    {
+      "seed": 831106000,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106000_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106000/attempt-6350f382f0904912abe881166b9c085e/runs/spsa_N6_seed831106000_L2_nov3.json"
+    },
+    {
+      "seed": 831106001,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106001_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106001/attempt-f67bfc8d9a624ac79b83dafd3312c971/runs/spsa_N6_seed831106001_L1_nov3.json"
+    },
+    {
+      "seed": 831106001,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106001_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106001/attempt-f67bfc8d9a624ac79b83dafd3312c971/runs/spsa_N6_seed831106001_L2_nov3.json"
+    },
+    {
+      "seed": 831106002,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106002_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106002/attempt-b2adffc343cd4532b86c0f4ff2b470a4/runs/spsa_N6_seed831106002_L1_nov3.json"
+    },
+    {
+      "seed": 831106002,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106002_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106002/attempt-b2adffc343cd4532b86c0f4ff2b470a4/runs/spsa_N6_seed831106002_L2_nov3.json"
+    },
+    {
+      "seed": 831106003,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106003_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106003/attempt-de467d31fcad43f7b25206cfdce09203/runs/spsa_N6_seed831106003_L1_nov3.json"
+    },
+    {
+      "seed": 831106003,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106003_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106003/attempt-de467d31fcad43f7b25206cfdce09203/runs/spsa_N6_seed831106003_L2_nov3.json"
+    },
+    {
+      "seed": 831106004,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106004_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106004/attempt-f7f85b1f3bbe418ca147578ca2649390/runs/spsa_N6_seed831106004_L1_nov3.json"
+    },
+    {
+      "seed": 831106004,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106004_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106004/attempt-f7f85b1f3bbe418ca147578ca2649390/runs/spsa_N6_seed831106004_L2_nov3.json"
+    },
+    {
+      "seed": 831106005,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106005_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106005/attempt-7d6ed063aa5c4ec2ae8f33d0dc575842/runs/spsa_N6_seed831106005_L1_nov3.json"
+    },
+    {
+      "seed": 831106005,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106005_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106005/attempt-7d6ed063aa5c4ec2ae8f33d0dc575842/runs/spsa_N6_seed831106005_L2_nov3.json"
+    },
+    {
+      "seed": 831106006,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106006_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106006/attempt-1cae2c94bed849649b07e54757ad5fda/runs/spsa_N6_seed831106006_L1_nov3.json"
+    },
+    {
+      "seed": 831106006,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106006_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106006/attempt-1cae2c94bed849649b07e54757ad5fda/runs/spsa_N6_seed831106006_L2_nov3.json"
+    },
+    {
+      "seed": 831106007,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106007_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106007/attempt-bc10d1f30b4b436f9bdbd254bf917c48/runs/spsa_N6_seed831106007_L1_nov3.json"
+    },
+    {
+      "seed": 831106007,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106007_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106007/attempt-bc10d1f30b4b436f9bdbd254bf917c48/runs/spsa_N6_seed831106007_L2_nov3.json"
+    },
+    {
+      "seed": 831106008,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106008_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106008/attempt-4931364bcc894292aaeee4f2f2ea50ae/runs/spsa_N6_seed831106008_L1_nov3.json"
+    },
+    {
+      "seed": 831106008,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106008_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106008/attempt-4931364bcc894292aaeee4f2f2ea50ae/runs/spsa_N6_seed831106008_L2_nov3.json"
+    },
+    {
+      "seed": 831106009,
+      "L": 1,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106009_L1.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106009/attempt-8bae278986c6415b8f6fc71940303a90/runs/spsa_N6_seed831106009_L1_nov3.json"
+    },
+    {
+      "seed": 831106009,
+      "L": 2,
+      "source": "nov17_circuit/results/reference_states/N6_seed831106009_L2.json",
+      "original_source": "runs/dual_gpu/instances/N6_seed831106009/attempt-8bae278986c6415b8f6fc71940303a90/runs/spsa_N6_seed831106009_L2_nov3.json"
+    }
+  ]
+}

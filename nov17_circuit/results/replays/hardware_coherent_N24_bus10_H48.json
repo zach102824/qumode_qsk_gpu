@@ -1,0 +1,128 @@
+{
+  "records": [
+    {
+      "standard_error": 0.0,
+      "cavity_only_standard_error": 0.0,
+      "cavity_only_note": "Trace all three transmons; ideal end reset would still be required for reuse.",
+      "samples": 1,
+      "dt_max_us": 0.005,
+      "cutoff": 24,
+      "seconds": 57.092243103004876,
+      "jump_events": 0,
+      "final_required": "all three transmons g; both cavities in logical space",
+      "jump_counts": {
+        "cavity_A_loss": 0,
+        "cavity_B_loss": 0,
+        "bus_relaxation": 0,
+        "bus_dephasing": 0,
+        "local_A_relaxation": 0,
+        "local_A_dephasing": 0,
+        "local_B_relaxation": 0,
+        "local_B_dephasing": 0
+      },
+      "postselection": false,
+      "noise": false,
+      "seed": 831106000,
+      "state_fidelity": 0.9467700123786926,
+      "cavity_only_state_fidelity": 0.9471578598022461,
+      "L": 1,
+      "initial_general_H": false,
+      "duration_us": 21.54929658551372,
+      "local_chi_time": 48.0,
+      "stages": [
+        {
+          "kind": "state_preparation",
+          "duration_us": 1.9098593171027438
+        },
+        {
+          "kind": "all_15_ZZ_bus_phase",
+          "layer": 0,
+          "duration_us": 10.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 0,
+          "duration_us": 7.639437268410975
+        },
+        {
+          "kind": "full_local_shell_Z",
+          "layer": 0,
+          "duration_us": 2.0
+        }
+      ],
+      "readout": "Common original-X frame; final H omitted. Final readout noise excluded."
+    },
+    {
+      "standard_error": 0.0,
+      "cavity_only_standard_error": 0.0,
+      "cavity_only_note": "Trace all three transmons; ideal end reset would still be required for reuse.",
+      "samples": 1,
+      "dt_max_us": 0.005,
+      "cutoff": 24,
+      "seconds": 113.29040531399369,
+      "jump_events": 0,
+      "final_required": "all three transmons g; both cavities in logical space",
+      "jump_counts": {
+        "cavity_A_loss": 0,
+        "cavity_B_loss": 0,
+        "bus_relaxation": 0,
+        "bus_dephasing": 0,
+        "local_A_relaxation": 0,
+        "local_A_dephasing": 0,
+        "local_B_relaxation": 0,
+        "local_B_dephasing": 0
+      },
+      "postselection": false,
+      "noise": false,
+      "seed": 831106000,
+      "state_fidelity": 0.8967572450637817,
+      "cavity_only_state_fidelity": 0.9017874598503113,
+      "L": 2,
+      "initial_general_H": false,
+      "duration_us": 48.828171122335675,
+      "local_chi_time": 48.0,
+      "stages": [
+        {
+          "kind": "state_preparation",
+          "duration_us": 1.9098593171027438
+        },
+        {
+          "kind": "all_15_ZZ_bus_phase",
+          "layer": 0,
+          "duration_us": 10.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 0,
+          "duration_us": 7.639437268410975
+        },
+        {
+          "kind": "full_local_shell_Z",
+          "layer": 0,
+          "duration_us": 2.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 0,
+          "duration_us": 7.639437268410975
+        },
+        {
+          "kind": "all_15_ZZ_bus_phase",
+          "layer": 1,
+          "duration_us": 10.0
+        },
+        {
+          "kind": "coherent_H",
+          "layer": 1,
+          "duration_us": 7.639437268410975
+        },
+        {
+          "kind": "full_local_shell_Z",
+          "layer": 1,
+          "duration_us": 2.0
+        }
+      ],
+      "readout": "Common original-X frame; final H omitted. Final readout noise excluded."
+    }
+  ]
+}
