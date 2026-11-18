@@ -2,6 +2,7 @@
 
 This is the continuing workspace for the Nov17 hardware implementation of the unchanged Nov3 six-spin ansatz. Two cavities encode three binary spins each; two local control transmons and one shared bus provide physical control. GPU runs default to **GPU 1**.
 
+- [Tutorial PDF](docs/nov17_tutorial.pdf): ten one-page lessons, with core equations and worked examples; start here for the physical picture.
 - [Methods PDF](docs/nov17_methods.pdf): LaTeX/REVTeX 4.2 PRB format with standard transmon Pauli notation; total physical Hamiltonian, active terms for joint SNAP/local GRAPE, explicit K/M ansatz and state evolution, Lindblad noise bullets, and seven primary references.
 - [Noise strengths](noise_strengths.txt): readable parameter values, units, provenance, and omitted channels.
 - [Machine-readable noise configuration](config/noise_model.json): baseline source for the full-system Hamiltonian, collapse operators, and trajectories.
@@ -71,3 +72,7 @@ NOV17_RUN_GPU_TESTS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python 
 ```
 
 The full-circuit replay now defaults to the shorter tested H (chi-time 48), the configured cavity cutoff and jump step, and GPU 1. New runs record their effective model parameters. The trajectory engine also accepts `device='cpu'` for small checks. PyTorch must be installed in the active environment; this workstation can alternatively use its sibling `pytorch_gpu` environment, or an explicit site-packages path supplied through `NOV17_TORCH_SITE`. The CPU model, pulse and readout code requires NumPy and SciPy.
+
+Ground-state overlaps are checked separately from ideal-ansatz overlaps: see [independent ground-state verification](results/ground_state_verification.md) and `python -m nov17_circuit.scripts.verify_ground_state --noise` (GPU 1).
+
+Rebuild the teaching version with `.venv/bin/python nov17_circuit/docs/build.py --document nov17_tutorial`. Its numerical examples can be checked with `.venv/bin/python -m nov17_circuit.scripts.check_tutorial_examples`.

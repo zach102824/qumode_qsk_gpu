@@ -549,6 +549,35 @@ neither an extra Hamiltonian term nor a single-copy linear observable.
 Quantum-jump sampling provides a memory-efficient alternative to density
 matrix integration of the same generator; finite-shot measurement noise
 is an additional sampling step, distinct from these physical channels.
+
+\subsection{Ground-state preparation fidelity}
+
+Let $\ket{g_{\rm SK}}$ be the normalized lowest eigenvector of
+$H_{\rm SK}$, and let $V$ embed the six-spin binary basis in the two
+cavity Fock spaces. The retained hardware schedule stops before the
+last $W$, so its ground-state target is
+$\ket{g_X}=VW\ket{g_{\rm SK}}$. With the full physical density matrix
+$\rho$, we report two unconditioned overlaps:
+\begin{align}
+ F_{\rm cav}&=\bra{g_X}\tr_{q_A,q_B,q_b}(\rho)\ket{g_X},\\
+ F_{g,g,g}&=\bra{g_X,g,g,g}\rho\ket{g_X,g,g,g}.
+\end{align}
+The second expression is written in cavity--auxiliary tensor order for
+clarity. Neither quantity is divided by the probability of remaining in
+the logical subspace or of returning the transmons to $g$. In particular,
+$F_{g,g,g}\leq F_{\rm cav}$. The target is transformed with the state;
+this is the fidelity in the encoded output frame, before a physical
+final basis-change/readout pulse. A phase-free measurement pulse cannot
+be treated as a coherent final Hadamard for state-preparation fidelity.
+
+For a trajectory ensemble, average the individual squared overlaps
+(or their sum over auxiliary states for $F_{\rm cav}$). The reported
+uncertainty is one standard error, $s_F/\sqrt{N_{\rm traj}}$; it covers
+Monte Carlo sampling, not model uncertainty or finite-step bias.
+Ground-state fidelity must be evaluated against $\ket{g_X}$ directly;
+fidelity to the ideal variational ansatz has a different target and
+cannot simply be multiplied by the ansatz's ground-state fidelity.
+
 \bibliographystyle{apsrev4-2}
 \bibliography{references}
 \end{document}

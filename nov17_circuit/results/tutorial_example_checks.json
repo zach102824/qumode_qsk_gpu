@@ -1,0 +1,19 @@
+{
+  "two_spin_candidate_energies": [
+    0.4,
+    -0.4,
+    -0.4
+  ],
+  "pair_phase_A01": 0.026408931365430967,
+  "shell_phases": [
+    0.0,
+    0.8301621606467328,
+    1.6142441070905218,
+    2.3183338444927277
+  ],
+  "gamma_phi_per_us": 0.02333333333333333,
+  "T_phi_us": 42.85714285714286,
+  "pi_pulse_us": 2.5,
+  "Fock7_first_loss_mean_us": 85.71428571428571,
+  "stored_fidelities": "Rounded table values checked against ground_state_independent_checks.json"
+}

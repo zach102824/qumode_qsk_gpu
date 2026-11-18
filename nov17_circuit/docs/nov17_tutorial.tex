@@ -1,0 +1,500 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\definecolor{ink}{RGB}{23,65,100}
+\newcommand{\ket}[1]{\lvert#1\rangle}
+\newcommand{\bra}[1]{\langle#1\rvert}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\D}{\mathcal D}
+\newcommand{\lesson}[2]{\section*{\color{ink}#1}\addcontentsline{toc}{section}{#1}\noindent\textit{#2}\par\medskip}
+\newcommand{\example}{\par\medskip\noindent\textbf{Worked example.}\ }
+\newcommand{\takeaway}[1]{\par\medskip\noindent\textbf{Remember:} #1\par}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\emergencystretch}{2em}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries\color{ink} Understanding the Nov17 circuit}\\[5pt]
+{\large Ten short lessons with equations and worked examples}\\[5pt]
+{A companion to \texttt{nov17\_methods.pdf} \quad | \quad November 17, 2026}
+\end{center}
+\lesson{1. What is actually inside the device?}{Two cavities store six encoded spins. Three physical transmons control them.}
+A cavity is an oscillator: its Fock state $\ket n$ contains exactly $n$ photons.
+We use eight levels, $n=0,\ldots,7$, as the eight basis states of three encoded
+bits. This is a choice of labels; there are not three separate physical
+qubits inside a cavity.
+\begin{equation}
+ \boxed{\ket{b_2b_1b_0}_{\rm encoded}\ \longleftrightarrow\
+ \ket n_{\rm cavity},\qquad n=4b_2+2b_1+b_0.}
+\end{equation}
+\example $\ket{101}$ means $n=4+0+1=5$ photons. Cavity $A$ stores
+spins $(0,2,4)$ from the least to the most significant bit; cavity $B$
+stores $(1,3,5)$. Thus $\ket{5}_A\ket{2}_B$ represents spin bits
+$(s_0,s_1,s_2,s_3,s_4,s_5)=(1,0,0,1,1,0)$.
+
+There are two local control transmons, $q_A$ and $q_B$, plus a shared bus
+$q_b$. Each is approximated by two levels, $\ket g$ and $\ket e$.
+The coupling graph is
+\begin{center}
+\begin{tabular}{ccccc}
+$q_A$&&&&$q_B$\\
+$\vert$&&&&$\vert$\\
+Cavity $A$&---&Bus $q_b$&---&Cavity $B$
+\end{tabular}
+\end{center}
+The physical system starts in vacuum with all transmons in $g$.
+A local preparation pulse creates the uniform encoded superposition:
+\begin{equation}
+ \ket0_{\rm cavity}\ \longrightarrow\
+ \frac1{\sqrt8}\sum_{n=0}^{7}\ket n
+ \ \longleftrightarrow\ \ket+^{\otimes3}.
+\end{equation}
+\example After this ideal preparation, each of the eight Fock outcomes has
+probability $1/8$. Its mean photon number is $(0+1+\cdots+7)/8=3.5$.
+Starting from vacuum and later having a plus state are consecutive steps.
+
+\textbf{Notation used throughout.} Lowercase $a,a^\dagger$ act on physical
+cavity levels; $n=a^\dagger a$ counts photons. Physical transmons use
+$\sigma_z,\sigma_\pm$, with $\sigma_z\ket g=-\ket g$ and
+$\sigma_z\ket e=+\ket e$. Encoded spins use capital $X_i,Z_i$, with
+$Z\ket0=+\ket0$ and $Z\ket1=-\ket1$. For example, $n\ket5=5\ket5$ and $a\ket5=\sqrt5\ket4$:
+the latter lowers the photon number. These are different objects.
+\takeaway{The photons store the state. The transmons help change its amplitudes and phases.}
+
+\clearpage
+\lesson{2. What state do we want to prepare?}{The spin Hamiltonian defines the optimization goal.}
+For six encoded spins, the target model is
+\begin{equation}
+ \boxed{H_{\rm SK}=\sum_{i<j}J_{ij}Z_iZ_j-B\sum_iX_i.}
+\end{equation}
+There are $\binom62=15$ pair terms. $J_{ij}$ specifies whether a pair favors
+matching or opposite $Z$ signs. The transverse field $B$ favors positive
+$X$ polarization. All spin energies here use the project's fixed energy
+units, separate from the MHz used for physical pulse controls.
+
+\example Take just two spins with $J_{01}=0.4$ and $B=0.2$.
+For $\ket{00}$, the pair product is $+1$, and both $X$ expectations are zero:
+its energy is $+0.4$. For $\ket{01}$ the pair product is $-1$, so the
+energy is $-0.4$. For $\ket{++}$ the pair expectation is zero and each
+$X$ expectation is $+1$, giving energy $-0.2(1+1)=-0.4$.
+These candidate energies do not by themselves identify the exact ground state.
+
+The ground state minimizes energy over all normalized states:
+\begin{equation}
+ H_{\rm SK}\ket{g_{\rm SK}}=E_0\ket{g_{\rm SK}},\qquad
+ E(\boldsymbol\theta)=\bra{\psi(\boldsymbol\theta)}H_{\rm SK}
+                         \ket{\psi(\boldsymbol\theta)}.
+\end{equation}
+\example In our saved six-spin instance, with seed $831106000$ and
+$B=0.183$, exact diagonalization gives $E_0=-2.7968862$.
+The optimized ideal $L=1$ ansatz has $E=-2.6208718$. Its excess energy is
+$0.1760144$ in total, or $0.0293357$ per spin. The optimizer tries to reduce
+this difference by changing the ansatz parameters.
+
+\textbf{Why introduce another Hamiltonian later?}
+$H_{\rm SK}$ says what state we want. The physical cavity--transmon
+Hamiltonian says which microwave pulses can prepare it. The experiment
+compiles the desired spin operations into physical controls; it does not
+acquire a literal direct $Z_iZ_j$ coupling between every pair of encoded bits.
+
+\textbf{Reading the three energy symbols.}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Symbol & Meaning\\\midrule
+$H_{\rm SK}$ & Target spin model\\
+$H_{\rm sys}(t)$ & Driven physical device\\
+$E(\boldsymbol\theta)$ & Measured or computed objective for the optimizer\\\bottomrule
+\end{tabular}
+\end{center}
+\takeaway{First choose the desired spin evolution; then use the device Hamiltonian to implement it.}
+
+\clearpage
+\lesson{3. Which physical Hamiltonian controls the device?}{Fixed dispersive coupling makes frequencies depend on photon number; drives do the active control.}
+In rotating frames, use $h=H_{\rm sys}/\hbar$ so that its units are angular
+frequency. The total baseline for two cavities and three transmons is
+\begin{equation}
+\boxed{\begin{aligned}
+ h(t)={}&\underbrace{\sum_{j=A,B}\widetilde\Delta_{c,j}n_j
+           +\sum_{r=A,B,b}\frac{\Delta_{q,r}}2\sigma_r^z}_{\text{detunings}}\\
+ &\underbrace{-\frac12\sum_{r,j}\chi_{rj}n_j\sigma_r^z}_{\text{dispersive coupling}}\\
+ &+\underbrace{\sum_j(\epsilon_j a_j^\dagger+\epsilon_j^*a_j)
+       +\sum_r(\Omega_r\sigma_r^++\Omega_r^*\sigma_r^-)}_{\text{applied drives}}.
+\end{aligned}}
+\end{equation}
+$\Delta$ means mode frequency minus drive-frame frequency. The four
+nonzero shifts are $\chi_{AA}=\chi_A$, $\chi_{BB}=\chi_B$,
+$\chi_{bA}$, and $\chi_{bB}$. The complex envelopes $\epsilon$ and $\Omega$
+contain the two I/Q drive quadratures: the real and imaginary parts that
+set drive strength and phase. Optional Kerr and exchange terms
+are zero in the present baseline; the methods PDF specifies their extensions.
+
+\example With local $\chi_A/(2\pi)=1$ MHz, adding one photon lowers the
+local transmon's transition frequency by $1$ MHz. Cavity drives mix photon
+numbers; transmon drives rotate the physical transmon. The fixed coupling
+lets those rotations respond differently to different photon numbers.
+
+\textbf{The factor of two matters.} The $\chi$ quoted here is the full
+transmon transition shift per photon. Because the two $\sigma_z$
+eigenvalues differ by two, the Hamiltonian coefficient is $-\chi/2$.
+To preserve the configured ground-transmon cavity frequencies, write
+\begin{equation}
+ \widetilde\Delta_{c,j}=\Delta_{c,j}-\frac12\sum_r\chi_{rj}.
+\end{equation}
+\example For cavity $A$, the local and bus shifts are both $1$ MHz and the
+configured $\Delta_{c,A}=0$. Hence $\widetilde\Delta_{c,A}/(2\pi)=-1$ MHz.
+With both transmons in $g$, their dispersive contributions give
+$+0.5n_A+0.5n_A$ MHz and exactly cancel $-n_A$ MHz. Dropping this cavity
+half-shift would change the dynamics.
+
+\textbf{Units and drive convention.} Time is in $\mu$s; multiply MHz by
+$2\pi$ to obtain rad/$\mu$s. Our transmon drive has no extra $1/2$:
+its resonant angular Rabi frequency is $2|\Omega|$.
+For $\Omega/(2\pi)=0.1$ MHz, a resonant $\pi$ rotation takes
+$\pi/(2|\Omega|)=2.5\,\mu$s. Dissipation rates $1/T$ have no $2\pi$ factor.
+\takeaway{Dispersive terms stay present. A pulse schedule chooses which drives to apply.}
+
+\clearpage
+\lesson{4. How does one bus pulse implement joint SNAP?}{It gives each joint photon-number component its own phase.}
+During the joint phase gate, drive only the shared bus. In a fixed cavity
+component $\ket{n,m}$, the bus sees the conditional detuning
+\begin{equation}
+ \boxed{\delta_{nm}=\Delta_{q,b}-\chi_{bA}n-\chi_{bB}m.}
+\end{equation}
+\example Our baseline gives $\delta_{nm}/(2\pi)=8.05-n-1.3m$ MHz.
+The components $\ket{1,0}$ and $\ket{0,1}$ therefore correspond to
+$7.05$ and $6.75$ MHz. They can acquire different phases under a shaped
+bus drive. Across the logical $8\times8$ space, the smallest separation
+is only $0.1$ MHz, so selectivity is a real pulse-design constraint.
+
+The desired cavity operation is
+\begin{equation}
+ \boxed{S_{AB}(\Phi)=\sum_{n,m=0}^{7}e^{-i\Phi_{nm}}
+                                \ket{n,m}\bra{n,m}.}
+\end{equation}
+The bus starts in $g$, moves during the pulse, and should return to $g$
+with the desired phase for each component. Our compiler optimizes its I/Q
+waveform to approximate this operation simultaneously in all 64 components.
+
+\example Suppose a toy phase table gives only $\ket{1,1}$ a phase $\pi$.
+Applied to $(\ket0+\ket1)_A(\ket0+\ket1)_B/2$, it produces
+$(\ket{00}+\ket{01}+\ket{10}-\ket{11})/2$. The probabilities remain
+$1/4$, but the state is entangled. The coefficient matrix
+$\bigl(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\bigr)/2$ has rank two,
+whereas a product state has rank one.
+
+\textbf{Why a shared drive is necessary.} Independent local phases have
+$\Phi_{nm}=\alpha_n+\beta_m$ modulo $2\pi$. For the toy table, the combination
+$\Phi_{00}+\Phi_{11}-\Phi_{01}-\Phi_{10}=\pi$ cannot arise from that sum.
+The joint bus control provides the required nonseparable phase.
+An undriven bus held in $g$ does not implement this arbitrary phase table.
+
+\textbf{How the papers fit.} Heeres et al. introduce number-selective
+SNAP phases in one storage cavity; our joint operation extends that idea
+using a bus coupled to two storage modes. Wang et al. provide an
+experimental shared-transmon/two-cavity precedent. Zhang et al.
+(arXiv:1808.07960) analyze driven exchange and beam-splitter interactions,
+which move photons between cavities. That is a different operation from
+this number-diagonal phase gate.
+\takeaway{Joint SNAP changes phases without changing ideal Fock populations. The bus drive and both bus dispersive shifts work together.}
+
+\clearpage
+\lesson{5. What does local GRAPE actually do?}{GRAPE chooses microwave waveforms; it is not an additional physical gate or coupling.}
+With the bus in $g$ and its drive off, the ideal baseline separates into two
+local control problems. For cavity $j$ and its local transmon,
+\begin{equation}
+\boxed{\begin{aligned}
+ h_j(t)={}&(\Delta_{c,j}-\chi_j/2)n_j
+       +\frac{\Delta_{q,j}-\chi_j n_j}{2}\sigma_j^z\\
+ &+\epsilon_j(t)a_j^\dagger+\epsilon_j^*(t)a_j
+       +\Omega_j(t)\sigma_j^++\Omega_j^*(t)\sigma_j^-.
+\end{aligned}}
+\end{equation}
+\example At zero configured detunings and $\chi_j/(2\pi)=1$ MHz, the drift
+on $\ket{g,n}$ is zero: $-n/2+n/2=0$. On $\ket{e,n}$ it is $-n$ MHz.
+Turning on the cavity drive mixes Fock levels; driving the transmon accesses
+this number-dependent evolution. Both controls are available during GRAPE.
+
+Divide the pulse into short constant-amplitude bins. GRAPE adjusts the four
+real amplitudes per bin to improve overlap with a target. It uses derivatives
+of the objective to decide which amplitudes to change. In the saved
+preparation pulse there are 96 bins: about $19.9$ ns per bin over $1.91\,\mu$s.
+
+\textbf{Two different targets use the same controls.}
+\begin{equation}
+ \begin{aligned}
+ \text{Preparation: }&U_{\rm prep}\ket{g,0}
+       \simeq\ket g\frac1{\sqrt8}\sum_{n=0}^{7}\ket n,\\
+ \text{Coherent Hadamard: }&U_H\ket{g,n}
+       \simeq\ket g H^{\otimes3}\ket n\quad\text{for every }n=0,\ldots,7.
+ \end{aligned}
+\end{equation}
+\example Both targets agree on input $n=0$. On input $n=1$, a true
+three-bit Hadamard produces alternating signs:
+$(\ket0-\ket1+\ket2-\ket3+\ket4-\ket5+\ket6-\ket7)/\sqrt8$.
+The preparation-only pulse has no requirement to do that. It can therefore
+be easier to optimize and shorter: our selected preparation takes
+$1.91\,\mu$s, while the shorter reusable coherent H takes $7.64\,\mu$s.
+
+\textbf{Local shell SNAP.} To apply a local diagonal phase table, turn off
+the cavity drive and shape the local-transmon drive. For example, a desired
+$\ket5\mapsto e^{-i0.3}\ket5$ can be part of a local SNAP table.
+A general H requires population mixing and uses the richer local drive set.
+
+\textbf{Readout versus coherent control.} A measurement pulse may produce
+$D H^{\otimes3}$, where $D$ only changes output phases: number probabilities
+are unchanged. An interior coherent H must preserve the required relative
+phases because later pulses can turn them into probability differences.
+\takeaway{Use a state-preparation objective at the start, coherent H inside the circuit, and a measurement objective only at readout.}
+
+\clearpage
+\lesson{6. What is the Nov17 ansatz, step by step?}{Each layer applies a joint cost phase and a local mixer expressed through Hadamards.}
+Define $W=H^{\otimes6}$, implemented by one three-bit H per cavity in parallel.
+The ideal state evolves as
+\begin{equation}
+ \boxed{\ket{\psi_0}=\ket+^{\otimes6},\qquad
+ \ket{\psi_\ell}=W S_\ell^Z W C_Z\ket{\psi_{\ell-1}}.}
+\end{equation}
+\example For $L=1$, read from right to left: prepare plus, apply $C_Z$,
+apply $W$, apply $S_1^Z$, and apply the last $W$. For the common native-X
+output, stop before the last $W$. The pulse durations are then
+$1.91+10+7.64+2=21.55\,\mu$s. The two local pulses run in parallel,
+so their durations are counted once, not twice.
+
+The cost phase uses three matrices:
+\begin{equation}
+ C_Z=e^{-i\sum_{i<j} A_{ij}Z_iZ_j},\qquad
+ A=\gamma(J+aK+bM).
+\end{equation}
+$J$ is the random coupling matrix. Form $K$ from $J^2$ with its diagonal
+removed, then rescale its upper-triangle RMS (root mean square of the
+15 distinct pair coefficients) to equal that of $J$.
+For example, a path with $J_{01}=0.2$ and $J_{12}=0.3$ contributes
+$0.06$ to the unnormalized $K_{02}$. For $M$, fill the nine cross-cavity entries with the mean of the corresponding
+$J$ entries, set within-cavity entries to zero, and apply the same RMS
+normalization. A zero template stays zero. $K$ is a matrix square, not the
+square of the spin Hamiltonian.
+
+\example For the saved $L=1$ instance, $J_{01}=0.0282334$,
+$K_{01}=-0.2570185$, and $M_{01}=0.5596066$.
+With $(\gamma,a,b)=(0.4635323,-0.2182316,-0.0488731)$,
+$A_{01}=0.0264089$ radians. This pair alone gives matching bits
+$e^{-i0.0264089}$ and opposite bits $e^{+i0.0264089}$.
+All 15 pairs commute; their phases add into the single joint SNAP table.
+There are three within-cavity pairs per cavity and nine cross-cavity pairs.
+
+The local shell counts the number $k$ of encoded 1 bits:
+\begin{equation}
+ f_\ell(k)=b_{\ell1}k+b_{\ell2}\binom{k}{2}+b_{\ell3}\binom{k}{3},
+ \qquad S_\ell^Z=e^{-i[f_\ell(\hat k_A)+f_\ell(\hat k_B)]}.
+\end{equation}
+\example Fock $n=5$ is binary $101$, so $k=2$, not $5$.
+For the saved first-layer coefficients $(0.8301622,-0.0460802,-0.0339120)$,
+$f_1(2)=1.6142441$ radians. The shell phases for $k=0,1,2,3$ are
+$0,0.8301622,1.6142441,2.3183338$. Two cavities both having $k=2$
+acquire the summed phase $3.2284882$ radians.
+\takeaway{The parameters $\gamma,a,b$ are shared across layers; each layer adds three shell parameters shared by both cavities: $3+3L$ parameters total.}
+
+\clearpage
+\lesson{7. How do we measure energy and spin-glass correlations?}{A histogram estimates probabilities in the basis physically measured.}
+A Hadamard swaps the single-spin axes:
+\begin{equation}
+ \boxed{H Z H=X,\qquad H X H=Z.}
+\end{equation}
+\example If the original state is $\ket+$, its original $X$ value is
+certainly $+1$. In the transformed state $H\ket+=\ket0$, native
+computational readout returns 0, which is assigned sign $+1$.
+This is why omitting the final $W$ allows native Fock readout to estimate
+original-spin $X$ observables. To access original $Z$ correlations,
+apply the appropriate physical basis-change pulse before number readout.
+
+For measured bits, assign $s_i=+1$ for 0 and $s_i=-1$ for 1.
+The same shot gives every single-spin sign and every pair product.
+\begin{equation}
+ \widehat{\langle Z_iZ_j\rangle}=\frac1M\sum_{t=1}^M s_i^{(t)}s_j^{(t)},
+ \qquad
+ E=\sum_{i<j}J_{ij}\langle Z_iZ_j\rangle-B\sum_i\langle X_i\rangle.
+\end{equation}
+\example In a correctly calibrated Z-basis measurement, suppose a pair
+matches on 6 of 8 shots and differs on 2. Its correlation estimate is
+$(6-2)/8=0.5$. With $J_{ij}=0.4$, this term contributes $0.2$ to energy.
+An X-basis histogram similarly supplies all $X_i$ and $X_iX_j$ products,
+but not the missing Z-basis probabilities.
+
+\textbf{Why classical Hadamards cannot fix a histogram.}
+$\ket{00}$ and $\ket{01}$ both have uniform probabilities for all four
+outcomes when both spins are measured in X. Yet their Z-pair correlations
+are $+1$ and $-1$. The X histogram alone cannot distinguish them, even
+with infinitely many shots. Amplitudes and relative phases contain more
+information than a histogram.
+
+Our equal-time spin-glass indicator is
+\begin{equation}
+ \boxed{\chi_{\rm SG}=\frac16\sum_{i,j}\langle Z_iZ_j\rangle^2
+          =1+\frac13\sum_{i<j}\langle Z_iZ_j\rangle^2.}
+\end{equation}
+\example For ideal $\ket+^{\otimes6}$ all distinct-spin Z correlations
+vanish, so $\chi_{\rm SG}=1$. For a fixed Z-basis bit string every pair
+correlation has magnitude one, so $\chi_{\rm SG}=1+15/3=6$.
+Squaring a noisy correlation estimate adds sampling bias; the stored
+estimator subtracts an estimated variance correction.
+
+The 8192 shots are a total budget across settings. The retained calibrated
+example uses four pairs of local settings with counts $179,1243,1291,5479$.
+The precise allocation depends on $J$, $B$ and the response model.
+\takeaway{Measure in the required physical bases. A finite-size correlation indicator can show a crossover; by itself N=6 does not establish a thermodynamic phase transition.}
+
+\clearpage
+\lesson{8. How does the Hamiltonian become a noisy simulation?}{The Hamiltonian gives coherent motion; Lindblad terms describe irreversible changes.}
+A density matrix $\rho$ describes both pure states and statistical mixtures.
+The Markovian model evolves it according to
+\begin{equation}
+ \boxed{\dot\rho=-i[h(t),\rho]+\sum_\mu\D[L_\mu]\rho,\qquad
+ \D[L]\rho=L\rho L^\dagger-\tfrac12\{L^\dagger L,\rho\}.}
+\end{equation}
+The commutator is the pulse-driven evolution. Each collapse operator $L$
+specifies a physical noise channel; its coefficient sets the rate.
+
+\example With no drive, start a cavity in $\ket1$. Photon loss gives
+$\rho(t)=e^{-t/T_1}\ket1\bra1+(1-e^{-t/T_1})\ket0\bra0$.
+At one lifetime, $T_1=600\,\mu$s, the one-photon population is $36.8\%$
+and the vacuum population is $63.2\%$. Their sum remains one.
+
+\begin{center}
+\begin{tabular}{p{0.25\linewidth}p{0.32\linewidth}p{0.32\linewidth}}
+\toprule
+Noise & Collapse operator & Physical meaning\\\midrule
+Cavity loss & $L=\sqrt{\kappa}\,a$, $\kappa=1/T_{1c}$ & Photons leave the cavity.\\[4pt]
+Transmon relaxation & $L=\sqrt{\gamma_1}\,\sigma^-$, $\gamma_1=1/T_{1q}$ & A transmon decays from $e$ to $g$.\\[4pt]
+Transmon pure dephasing & $L=\sqrt{\gamma_\phi/2}\,\sigma_z$ & Phase information is randomized.\\[4pt]
+Optional cavity dephasing & $L=\sqrt{\eta}\,n$ & Different Fock components lose relative coherence.\\\bottomrule
+\end{tabular}
+\end{center}
+\example Cavity $T_1=600\,\mu$s gives $\kappa=0.0016667/\mu$s.
+For an undriven $\ket7$, the first photon-loss rate is $7\kappa$, so its
+mean waiting time is $600/7=85.7\,\mu$s. The jump takes it to $\ket6$,
+changing encoded $111$ to $110$. This is not independent noise on three
+physical spin qubits. Transmon $T_1=50\,\mu$s gives $\gamma_1=0.02/\mu$s$;$
+an initially excited idle transmon survives for $10\,\mu$s with probability
+$e^{-10/50}=81.9\%$. Optional cavity dephasing is set to $\eta=0$ here.
+
+The total coherence time $T_2$ includes relaxation:
+\begin{equation}
+ \gamma_\phi=\frac1{T_2}-\frac1{2T_1}.
+\end{equation}
+\example Transmon $T_1=50\,\mu$s and $T_2=30\,\mu$s give
+$\gamma_\phi=0.0233333/\mu$s and $T_\phi=42.857\,\mu$s.
+The total off-diagonal coherence decays as $e^{-t/30}$, not $e^{-t/42.857}$.
+\takeaway{The cavity lifetime was user supplied. The transmon lifetimes and other device parameters are assumptions, not measurements.}
+
+\clearpage
+\lesson{9. How do we simulate the whole pulse sequence?}{Use the actual drive waveforms and keep the same noise model active throughout.}
+The procedure is: initialize vacuum and ground transmons; insert each pulse
+bin into $h(t)$; evolve through preparation, joint SNAP, local H and local
+shell; then compute the desired observable. Any physical readout pulse
+must be appended if its noise is to be included.
+
+The simulation retains 24 levels per cavity so that drives can leave the
+logical levels $0,\ldots,7$. With three two-level transmons the Hilbert-space
+dimension is $2^3\times24^2=4608$. A pure state has 4608 complex amplitudes;
+a density matrix has $4608^2=21{,}233{,}664$ complex entries.
+
+This motivates quantum trajectories: evolve many random pure-state
+histories whose average reproduces the density matrix in the convergence
+limit. Between jumps, use
+\begin{equation}
+ \boxed{h_{\rm eff}(t)=h(t)-\frac{i}{2}\sum_\mu L_\mu^\dagger L_\mu.}
+\end{equation}
+The unnormalized state's shrinking norm gives the probability of no jump.
+If a jump occurs, select its channel with weight proportional to
+$\|L_\mu\ket\psi\|^2$ and normalize the resulting state. The current
+implementation uses finite time steps, so timestep convergence matters.
+
+\example For one undriven photon, the no-jump amplitude is
+$e^{-\kappa t/2}$ and its squared norm is $e^{-\kappa t}$.
+A photon-loss jump sends $\ket1$ to $\ket0$. Averaging many such histories
+reproduces the cavity mixture from Lesson 8.
+
+\textbf{Two distinct kinds of sampling.}
+\begin{itemize}
+\item A trajectory samples a physical noise history inside the simulator.
+For example, 1024 trajectories estimate the noisy density matrix's overlap
+with a target. They are not the same as 1024 experimental measurements.
+\item A measurement shot samples an outcome from the final measurement
+probabilities. The 8192-shot energy budget concerns this second step.
+One can simulate noise first and then sample measurement outcomes.
+\end{itemize}
+
+\textbf{What we checked.} The ideal six-spin ground state was independently
+computed by diagonalizing a $64\times64$ matrix. An independent sparse,
+double-precision solver verified noiseless physical pulse evolution.
+For noise we compared 5 ns and 2.5 ns steps, using 1024 trajectories each
+on GPU 1. Their ground-state fidelities agree within sampling uncertainty.
+This is evidence of consistency at that precision, not proof of zero
+finite-step error.
+
+\textbf{What cutoff and model checks mean.} Increasing the cavity cutoff
+checks numerical truncation. It does not establish that a two-level
+transmon and dispersive approximation remain accurate at all populated
+photon numbers. That requires calibrated couplings, detunings and
+anharmonicities. Finite temperature, correlated baths and electronics
+imperfections are omitted from the current baseline.
+\takeaway{Quantum trajectories and a density-matrix solver describe the same chosen Lindblad model when numerical errors are controlled.}
+
+\clearpage
+\lesson{10. What do the fidelity numbers actually mean?}{Always name the target state, the output frame, and which auxiliary conditions are imposed.}
+Ground-state fidelity asks how much of the final state overlaps the target.
+Because the schedule stops before its final $W$, transform the target too:
+\begin{equation}
+ \boxed{\ket{g_X}=VW\ket{g_{\rm SK}},\qquad
+ F_{\rm cav}=\bra{g_X}\rho_{\rm cav}\ket{g_X}.}
+\end{equation}
+Here $V$ is just the binary-to-Fock embedding from Lesson 1, and
+$\rho_{\rm cav}$ is obtained by tracing out all three transmons.
+\example For one spin whose target is $\ket+$, an omitted final H means the
+output-frame target is $\ket0$. Comparing output $\ket0$ to $\ket+$ would
+incorrectly give $1/2$; comparing it to the transformed target gives one.
+
+We also compute a stricter overlap requiring all transmons to finish in $g$.
+It is at most $F_{\rm cav}$, and neither overlap is normalized by a success
+probability. For example, if the cavities are exactly on target but the
+auxiliaries finish in $ggg$ only 90\% of the time, $F_{\rm cav}=1$ and
+$F_{ggg}=0.9$.
+
+\textbf{Our verified example:} $N=6$, $L=1$, $B=0.183$, instance seed
+$831106000$, shorter H, $21.55\,\mu$s preparation. Final readout noise is
+excluded; these are fixed ideal-optimized parameters.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Calculation & Cavity fidelity & Also require $ggg$\\\midrule
+Ideal ansatz & $76.49\%$ & $76.49\%$\\
+Noiseless pulses, independent solver & $71.844\%$ & $71.797\%$\\
+Noisy, 1024 trajectories, 5 ns & $35.13\%\pm0.90$ pp & $32.70\%\pm0.92$ pp\\
+Noisy, 1024 trajectories, 2.5 ns & $34.66\%\pm0.90$ pp & $32.26\%\pm0.93$ pp\\\bottomrule
+\end{tabular}
+\end{center}
+``pp'' means percentage points. The error bars are one standard error,
+$s_F/\sqrt{N_{\rm traj}}$. For example, an overlap standard deviation of
+$0.288$ over 1024 trajectories gives $0.288/32=0.009$, or $0.90$ percentage
+points. It does not include uncertainty in the assumed lifetimes.
+
+The ideal ansatz is already imperfect; pulse synthesis lowers its actual
+ground-state fidelity further; physical noise lowers it to about 35\% in
+this instance. These effects are not independent probabilities that can
+simply be multiplied. In particular, the earlier 94.7\% noiseless number
+was overlap with the ideal ansatz, which is a different target.
+
+\textbf{Where to read more.} The companion methods PDF gives full notation
+and references. Useful primary papers are
+\href{https://arxiv.org/abs/1503.01496}{Heeres et al. (SNAP)},
+\href{https://doi.org/10.1103/PhysRevA.92.040303}{Krastanov et al. (oscillator control)},
+\href{https://arxiv.org/abs/1601.05505}{Wang et al. (two cavities)},
+\href{https://arxiv.org/abs/1808.07960}{Zhang et al. (driven mode exchange)}, and
+\href{https://arxiv.org/abs/2005.12667}{Blais et al. (circuit-QED review)}.
+For the noise equations see
+\href{https://doi.org/10.1007/BF01608499}{Lindblad (1976)} and
+\href{https://doi.org/10.1103/PhysRevLett.68.580}{Dalibard et al. (1992)}.
+\takeaway{The verified statement is about 35\% ground-state fidelity in the chosen noisy model, for this one circuit and instance, before physical readout.}
+\end{document}
